@@ -1,0 +1,1840 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="x-ua-compatible" content="IE=Edge" />
+	<title>Home - OnBase Agenda Online</title>
+	<link href="/211agendaonlinecouncil/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+	<meta name="viewport" content="width=device-width" />
+	
+	<meta name="format-detection" content="telephone=no" />
+
+	<script src="/211agendaonlinecouncil/bundles/jquery?v=9ktsOtIo0upvJP7-7FiXuOoOJe58RLFJ__wIRPL2vGo1"></script>
+
+
+	<link href="/211agendaonlinecouncil/bundles/css?v=DRk4-i98xgECysKu9WVBQQzGWVS-p3dGRK3lDMW9ZTo1" rel="stylesheet"/>
+
+
+	<!-- Dynamic Stylesheet -->
+	<link href="/211agendaonlinecouncil/Style" rel="stylesheet" />
+	<link type="text/css" rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,600,800,700|Merriweather:400,700" media="all" />
+	<link rel="stylesheet" href="/211agendaonlinecouncil/Content/css/cosd-onbase.css">
+</head>
+<body>
+	<div id="logo-container">
+		
+<!-- <div class="logo"><img src="~/Images/cosd-logo-stacked-white-color-sails-72ppi.png" /></div> -->
+<!-- <div style="font-size:1.5rem; padding:1rem; background-color: #fffceb;text-align:center"><p class="l-margin-bn"><strong>NOTICE:</strong> This site will be unavailable during scheduled maintenance on Friday, November 22 from 12 - 12:30 p.m.</p></div> -->
+<div id="logo-container">
+<div class="logo l-constrained">
+  <div class="three columns text-center l-padding-mobile-bd l-padding-desktop-lm">
+	<a href="https://www.sandiego.gov/city-clerk"><img src="/211agendaonlinecouncil/Images/cosd-logo-primary-white-color-sails-72ppi.png" width="205" height="50" class="hide-on-mobile" /><img src="/211agendaonlinecouncil/Images/cosd-logo-primary-white-color-sails-72ppi.png" width="200" height="auto" class="hide-on-desktop" /></a>
+  </div>
+  <div class="nine columns l-padding-mobile-hd">
+	<h1 class="heading--trim hide-on-mobile">City Council Agendas, Results, and Minutes</h1>
+	<h1 class="h2 heading--trim hide-on-desktop text-center">City Council Agendas, Results, and Minutes</h1>
+  </div>
+</div>
+</div>
+	</div>
+	<!--<div id="navbar" class="navbar navbar-inverse" role="navigation">
+		<div class="navbar-header">
+			<button id="btnNavToggle" class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<div class="media-collapse">
+				<span id="media-collapse-text">Hide Media</span>
+			</div>
+		</div>
+		<div class="navbar-collapse collapse navbar-responsive-collapse">
+			<ul class="nav navbar-nav">
+				<li><a href="/211agendaonlinecouncil/" id="lnkNavHome">Home</a></li>
+				<li><a href="/211agendaonlinecouncil/Meetings" id="lnkNavMeetings">Meetings</a></li>
+				<li><a href="/211agendaonlinecouncil/Home/Contact" id="lnkNavContact">Contact</a></li>
+			</ul>
+		</div>
+
+	</div>-->
+	<div id="navbar" class="navbar navbar-inverse l-constrained" role="navigation">
+		<div class="navbar-header">
+			<button id="btnNavToggle" class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<div class="media-collapse">
+				<span id="media-collapse-text">Hide Media</span>
+			</div>
+		</div>
+		<div class="navbar-collapse collapse navbar-responsive-collapse">
+			<ul class="nav navbar-nav">
+				<li><a href="/211agendaonlinecouncil/" id="lnkNavHome">Home</a></li>
+				<!--<li><a href="/211agendaonlinecouncil/Meetings" id="lnkNavMeetings">Meetings</a></li>-->
+				<li><a href="/211agendaonlinecouncil/Meetings" id="lnkNavMeetings">Past Meeting Search</a></li>
+				<!--<li><a href="/211agendaonlinecouncil/Home/Contact" id="lnkNavContact">Contact</a></li>-->
+				<li><a href="/211agendaonlinecouncil/Home/Contact" id="lnkNavContact">Meeting Resources</a></li>
+			</ul>
+		</div>
+	</div>
+	<div>
+		
+    <section class="featured l-constrained">
+        <div class="content-wrapper">
+            <!--<h1>Welcome to OnBase Agenda Online</h1>
+		    <p>Listed below are recent and upcoming meetings. To run a search click the &quot;Meetings&quot; link at the top of the page.</p>-->
+<div class="rounded-corners l-padding-am" style="background-color:#fffceb; border: 1px solid #ffa02f">
+<p class="l-margin-bn text-accent" style="font-size:1.3em;"><a href="https://www.sandiego.gov/city-clerk/officialdocs/participate-council-meetings">How to Join and Participate in City Council Meetings</a></p>
+</div>
+        </div>
+        <div class="header">
+           Meetings &amp; Agendas
+        </div>
+        <p class="l-margin-bm"><strong>NOTE: Comment on Agenda Items, Non-Agenda Public Comment, and Closed Session Public Comment</strong> may be submitted using the <a href="https://www.sandiego.gov/city-clerk/agenda-comment-form">webform</a>.</p>
+        <div class="content">
+            
+
+
+<script type="text/javascript">
+	var localeSortableStrings =
+	{
+		FILTER_MENU_ALL:	'All',
+		COUNT_LABEL:		'Showing {0} Meeting(s)',
+	};
+	var realCount = 0;
+</script>
+<div id="meetings-list">
+			<div>
+				<ul id="meetings-upcoming-list-tabs" class="nav nav-tabs">
+					<li><a href="#meetings-list-upcoming" id="lnkUpcoming" data-toggle="tabs">Upcoming</a></li>
+				</ul>
+				<div id="meetings-upcoming-list-content" class="tab-content">
+					<div class="tab-pane" id="meetings-list-upcoming">
+							<div class="border border--dark l-margin-bm">
+					<div class="row l-padding-vd l-padding-mobile-hd background-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>3/10/2026</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Public Comments for Tuesday Meeting</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6908&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Public Comments for Tuesday Meeting City Council on 3/10/2026 10:00:00 AM" id="lnkMeetingAgenda_6908">Public Comment</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Public_Comments_for_Tuesday_Meeting_6908_Agenda_3_10_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6908" id="lnkMeetingAgendaDoc_6908" target="_blank"
+		   title="Download Agenda for Public Comments for Tuesday Meeting City Council on 3/10/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">3/10/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Tuesday Agenda Revised Added S500-S505</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6892&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Tuesday Agenda Revised Added S500-S505 City Council on 3/10/2026 10:00:00 AM" id="lnkMeetingAgenda_6892">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Tuesday_Agenda_Revised_Added_S500-S505_6892_Agenda_3_10_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6892" id="lnkMeetingAgendaDoc_6892" target="_blank"
+		   title="Download Agenda for Tuesday Agenda Revised Added S500-S505 City Council on 3/10/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6892&amp;doctype=3&amp;site=council"
+		   title="View Summary for Tuesday Agenda Revised Added S500-S505 City Council on 3/10/2026 10:00:00 AM" id="lnkMeetingSummary_6892">Summary</a>
+		<!--<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Documents/DownloadFile/Tuesday_Agenda_Revised_Added_S500-S505_6892_Summary_3_10_2026_10_00_00_AM.pdf?documentType=3&amp;meetingId=6892" id="lnkMeetingSummaryDoc_6892" target="_blank"
+		   title="Download Summary for Tuesday Agenda Revised Added S500-S505 City Council on 3/10/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background--off-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>3/9/2026</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Closed Session</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6900&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Closed Session City Council on 3/9/2026 10:00:00 AM" id="lnkMeetingAgenda_6900">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Closed_Session_6900_Agenda_3_9_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6900" id="lnkMeetingAgendaDoc_6900" target="_blank"
+		   title="Download Agenda for Closed Session City Council on 3/9/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background--off-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">3/9/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Monday Agenda Revised Added S400-S401</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6891&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Monday Agenda Revised Added S400-S401 City Council on 3/9/2026 10:00:00 AM" id="lnkMeetingAgenda_6891">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Monday_Agenda_Revised_Added_S400-S401_6891_Agenda_3_9_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6891" id="lnkMeetingAgendaDoc_6891" target="_blank"
+		   title="Download Agenda for Monday Agenda Revised Added S400-S401 City Council on 3/9/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6891&amp;doctype=3&amp;site=council"
+		   title="View Summary for Monday Agenda Revised Added S400-S401 City Council on 3/9/2026 10:00:00 AM" id="lnkMeetingSummary_6891">Summary</a>
+		<!--<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Documents/DownloadFile/Monday_Agenda_Revised_Added_S400-S401_6891_Summary_3_9_2026_10_00_00_AM.pdf?documentType=3&amp;meetingId=6891" id="lnkMeetingSummaryDoc_6891" target="_blank"
+		   title="Download Summary for Monday Agenda Revised Added S400-S401 City Council on 3/9/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background--off-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">3/9/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Public Comments for Monday Meeting</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6904&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Public Comments for Monday Meeting City Council on 3/9/2026 10:00:00 AM" id="lnkMeetingAgenda_6904">Public Comment</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Public_Comments_for_Monday_Meeting_6904_Agenda_3_9_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6904" id="lnkMeetingAgendaDoc_6904" target="_blank"
+		   title="Download Agenda for Public Comments for Monday Meeting City Council on 3/9/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+	</div>
+
+					</div>
+				</div>
+			</div>
+			<div>
+				<ul id="meetings-list-tabs" class="nav nav-tabs">
+
+							<li><a href="#meeting-list-recent" data-toggle="tabs" id="lnkRecent">Recent</a></li>
+				</ul>
+
+				<div id="meetings-list-content" class="tab-content">
+
+							<div class="tab-pane" id="meeting-list-recent">
+									<div class="border border--dark l-margin-bm">
+					<div class="row l-padding-vd l-padding-mobile-hd background-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>3/3/2026</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Public Comments for Tuesday Meeting</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6895&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Public Comments for Tuesday Meeting City Council on 3/3/2026 10:00:00 AM" id="lnkMeetingAgenda_6895">Public Comment</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Public_Comments_for_Tuesday_Meeting_6895_Agenda_3_3_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6895" id="lnkMeetingAgendaDoc_6895" target="_blank"
+		   title="Download Agenda for Public Comments for Tuesday Meeting City Council on 3/3/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">3/3/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Tuesday Agenda and Results Summary</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6880&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Tuesday Agenda and Results Summary City Council on 3/3/2026 10:00:00 AM" id="lnkMeetingAgenda_6880">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Tuesday_Agenda_and_Results_Summary_6880_Agenda_3_3_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6880" id="lnkMeetingAgendaDoc_6880" target="_blank"
+		   title="Download Agenda for Tuesday Agenda and Results Summary City Council on 3/3/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6880&amp;doctype=3&amp;site=council"
+		   title="View Summary for Tuesday Agenda and Results Summary City Council on 3/3/2026 10:00:00 AM" id="lnkMeetingSummary_6880">Summary</a>
+		<!--<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Documents/DownloadFile/Tuesday_Agenda_and_Results_Summary_6880_Summary_3_3_2026_10_00_00_AM.pdf?documentType=3&amp;meetingId=6880" id="lnkMeetingSummaryDoc_6880" target="_blank"
+		   title="Download Summary for Tuesday Agenda and Results Summary City Council on 3/3/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background--off-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>3/2/2026</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Monday Agenda and Results Summary</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6881&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Monday Agenda and Results Summary City Council on 3/2/2026 10:00:00 AM" id="lnkMeetingAgenda_6881">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Monday_Agenda_and_Results_Summary_6881_Agenda_3_2_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6881" id="lnkMeetingAgendaDoc_6881" target="_blank"
+		   title="Download Agenda for Monday Agenda and Results Summary City Council on 3/2/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6881&amp;doctype=3&amp;site=council"
+		   title="View Summary for Monday Agenda and Results Summary City Council on 3/2/2026 10:00:00 AM" id="lnkMeetingSummary_6881">Summary</a>
+		<!--<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Documents/DownloadFile/Monday_Agenda_and_Results_Summary_6881_Summary_3_2_2026_10_00_00_AM.pdf?documentType=3&amp;meetingId=6881" id="lnkMeetingSummaryDoc_6881" target="_blank"
+		   title="Download Summary for Monday Agenda and Results Summary City Council on 3/2/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background--off-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">3/2/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Closed Session</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6893&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Closed Session City Council on 3/2/2026 10:00:00 AM" id="lnkMeetingAgenda_6893">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Closed_Session_6893_Agenda_3_2_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6893" id="lnkMeetingAgendaDoc_6893" target="_blank"
+		   title="Download Agenda for Closed Session City Council on 3/2/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background--off-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">3/2/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Public Comments for Monday Meeting</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6894&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Public Comments for Monday Meeting City Council on 3/2/2026 10:00:00 AM" id="lnkMeetingAgenda_6894">Public Comment</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Public_Comments_for_Monday_Meeting_6894_Agenda_3_2_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6894" id="lnkMeetingAgendaDoc_6894" target="_blank"
+		   title="Download Agenda for Public Comments for Monday Meeting City Council on 3/2/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>2/24/2026</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Public Facilities Financing Authority</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6873&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Public Facilities Financing Authority City Council on 2/24/2026 2:00:00 PM" id="lnkMeetingAgenda_6873">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Public_Facilities_Financing_Authority_6873_Agenda_2_24_2026_2_00_00_PM.pdf?documentType=1&amp;meetingId=6873" id="lnkMeetingAgendaDoc_6873" target="_blank"
+		   title="Download Agenda for Public Facilities Financing Authority City Council on 2/24/2026 2:00:00 PM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">2/24/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Tuesday Agenda and Results Summary</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6870&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Tuesday Agenda and Results Summary City Council on 2/24/2026 10:00:00 AM" id="lnkMeetingAgenda_6870">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Tuesday_Agenda_and_Results_Summary_6870_Agenda_2_24_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6870" id="lnkMeetingAgendaDoc_6870" target="_blank"
+		   title="Download Agenda for Tuesday Agenda and Results Summary City Council on 2/24/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6870&amp;doctype=3&amp;site=council"
+		   title="View Summary for Tuesday Agenda and Results Summary City Council on 2/24/2026 10:00:00 AM" id="lnkMeetingSummary_6870">Summary</a>
+		<!--<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Documents/DownloadFile/Tuesday_Agenda_and_Results_Summary_6870_Summary_2_24_2026_10_00_00_AM.pdf?documentType=3&amp;meetingId=6870" id="lnkMeetingSummaryDoc_6870" target="_blank"
+		   title="Download Summary for Tuesday Agenda and Results Summary City Council on 2/24/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">2/24/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Public Comments for Tuesday Meeting</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6888&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Public Comments for Tuesday Meeting City Council on 2/24/2026 10:00:00 AM" id="lnkMeetingAgenda_6888">Public Comment</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Public_Comments_for_Tuesday_Meeting_6888_Agenda_2_24_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6888" id="lnkMeetingAgendaDoc_6888" target="_blank"
+		   title="Download Agenda for Public Comments for Tuesday Meeting City Council on 2/24/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background--off-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>2/23/2026</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Public Comments for Monday Meeting</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6889&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Public Comments for Monday Meeting City Council on 2/23/2026 10:00:00 AM" id="lnkMeetingAgenda_6889">Public Comment</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Public_Comments_for_Monday_Meeting_6889_Agenda_2_23_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6889" id="lnkMeetingAgendaDoc_6889" target="_blank"
+		   title="Download Agenda for Public Comments for Monday Meeting City Council on 2/23/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background--off-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">2/23/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Closed Session</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6882&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Closed Session City Council on 2/23/2026 10:00:00 AM" id="lnkMeetingAgenda_6882">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Closed_Session_6882_Agenda_2_23_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6882" id="lnkMeetingAgendaDoc_6882" target="_blank"
+		   title="Download Agenda for Closed Session City Council on 2/23/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background--off-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">2/23/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Monday Agenda and Results Summary</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6869&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Monday Agenda and Results Summary City Council on 2/23/2026 10:00:00 AM" id="lnkMeetingAgenda_6869">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Monday_Agenda_and_Results_Summary_6869_Agenda_2_23_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6869" id="lnkMeetingAgendaDoc_6869" target="_blank"
+		   title="Download Agenda for Monday Agenda and Results Summary City Council on 2/23/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6869&amp;doctype=3&amp;site=council"
+		   title="View Summary for Monday Agenda and Results Summary City Council on 2/23/2026 10:00:00 AM" id="lnkMeetingSummary_6869">Summary</a>
+		<!--<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Documents/DownloadFile/Monday_Agenda_and_Results_Summary_6869_Summary_2_23_2026_10_00_00_AM.pdf?documentType=3&amp;meetingId=6869" id="lnkMeetingSummaryDoc_6869" target="_blank"
+		   title="Download Summary for Monday Agenda and Results Summary City Council on 2/23/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>2/17/2026</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Adjourned Agenda</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6868&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Adjourned Agenda City Council on 2/17/2026 10:00:00 AM" id="lnkMeetingAgenda_6868">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Adjourned_Agenda_6868_Agenda_2_17_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6868" id="lnkMeetingAgendaDoc_6868" target="_blank"
+		   title="Download Agenda for Adjourned Agenda City Council on 2/17/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background--off-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>2/16/2026</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Adjourned Agenda</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6867&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Adjourned Agenda City Council on 2/16/2026 10:00:00 AM" id="lnkMeetingAgenda_6867">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Adjourned_Agenda_6867_Agenda_2_16_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6867" id="lnkMeetingAgendaDoc_6867" target="_blank"
+		   title="Download Agenda for Adjourned Agenda City Council on 2/16/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>2/10/2026</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Housing Authority Adjournment Memo</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6862&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Housing Authority Adjournment Memo City Council on 2/10/2026 10:00:00 AM" id="lnkMeetingAgenda_6862">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Housing_Authority_Adjournment_Memo_6862_Agenda_2_10_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6862" id="lnkMeetingAgendaDoc_6862" target="_blank"
+		   title="Download Agenda for Housing Authority Adjournment Memo City Council on 2/10/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">2/10/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Tuesday Agenda and Results Summary</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6850&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Tuesday Agenda and Results Summary City Council on 2/10/2026 10:00:00 AM" id="lnkMeetingAgenda_6850">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Tuesday_Agenda_and_Results_Summary_6850_Agenda_2_10_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6850" id="lnkMeetingAgendaDoc_6850" target="_blank"
+		   title="Download Agenda for Tuesday Agenda and Results Summary City Council on 2/10/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6850&amp;doctype=3&amp;site=council"
+		   title="View Summary for Tuesday Agenda and Results Summary City Council on 2/10/2026 10:00:00 AM" id="lnkMeetingSummary_6850">Summary</a>
+		<!--<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Documents/DownloadFile/Tuesday_Agenda_and_Results_Summary_6850_Summary_2_10_2026_10_00_00_AM.pdf?documentType=3&amp;meetingId=6850" id="lnkMeetingSummaryDoc_6850" target="_blank"
+		   title="Download Summary for Tuesday Agenda and Results Summary City Council on 2/10/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background--off-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>2/9/2026</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Monday Agenda and Results Summary</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6853&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Monday Agenda and Results Summary City Council on 2/9/2026 10:00:00 AM" id="lnkMeetingAgenda_6853">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Monday_Agenda_and_Results_Summary_6853_Agenda_2_9_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6853" id="lnkMeetingAgendaDoc_6853" target="_blank"
+		   title="Download Agenda for Monday Agenda and Results Summary City Council on 2/9/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6853&amp;doctype=3&amp;site=council"
+		   title="View Summary for Monday Agenda and Results Summary City Council on 2/9/2026 10:00:00 AM" id="lnkMeetingSummary_6853">Summary</a>
+		<!--<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Documents/DownloadFile/Monday_Agenda_and_Results_Summary_6853_Summary_2_9_2026_10_00_00_AM.pdf?documentType=3&amp;meetingId=6853" id="lnkMeetingSummaryDoc_6853" target="_blank"
+		   title="Download Summary for Monday Agenda and Results Summary City Council on 2/9/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background--off-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">2/9/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Closed Session Adjournment Memo</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6861&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Closed Session Adjournment Memo City Council on 2/9/2026 10:00:00 AM" id="lnkMeetingAgenda_6861">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Closed_Session_Adjournment_Memo_6861_Agenda_2_9_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6861" id="lnkMeetingAgendaDoc_6861" target="_blank"
+		   title="Download Agenda for Closed Session Adjournment Memo City Council on 2/9/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>2/3/2026</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Adjourned Meeting Memo</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6848&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Adjourned Meeting Memo City Council on 2/3/2026 10:00:00 AM" id="lnkMeetingAgenda_6848">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Adjourned_Meeting_Memo_6848_Agenda_2_3_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6848" id="lnkMeetingAgendaDoc_6848" target="_blank"
+		   title="Download Agenda for Adjourned Meeting Memo City Council on 2/3/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">2/3/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Adjourned Agenda</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6855&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Adjourned Agenda City Council on 2/3/2026 10:00:00 AM" id="lnkMeetingAgenda_6855">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Adjourned_Agenda_6855_Agenda_2_3_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6855" id="lnkMeetingAgendaDoc_6855" target="_blank"
+		   title="Download Agenda for Adjourned Agenda City Council on 2/3/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background--off-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>2/2/2026</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Special Agenda and Results Summary</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6842&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Special Agenda and Results Summary City Council on 2/2/2026 10:00:00 AM" id="lnkMeetingAgenda_6842">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Special_Agenda_and_Results_Summary_6842_Agenda_2_2_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6842" id="lnkMeetingAgendaDoc_6842" target="_blank"
+		   title="Download Agenda for Special Agenda and Results Summary City Council on 2/2/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6842&amp;doctype=3&amp;site=council"
+		   title="View Summary for Special Agenda and Results Summary City Council on 2/2/2026 10:00:00 AM" id="lnkMeetingSummary_6842">Summary</a>
+		<!--<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Documents/DownloadFile/Special_Agenda_and_Results_Summary_6842_Summary_2_2_2026_10_00_00_AM.pdf?documentType=3&amp;meetingId=6842" id="lnkMeetingSummaryDoc_6842" target="_blank"
+		   title="Download Summary for Special Agenda and Results Summary City Council on 2/2/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background--off-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">2/2/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Special Meeting and Adjournment Memo Revised</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6851&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Special Meeting and Adjournment Memo Revised City Council on 2/2/2026 10:00:00 AM" id="lnkMeetingAgenda_6851">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Special_Meeting_and_Adjournment_Memo_Revised_6851_Agenda_2_2_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6851" id="lnkMeetingAgendaDoc_6851" target="_blank"
+		   title="Download Agenda for Special Meeting and Adjournment Memo Revised City Council on 2/2/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background--off-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">2/2/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Closed Session</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6856&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Closed Session City Council on 2/2/2026 10:00:00 AM" id="lnkMeetingAgenda_6856">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Closed_Session_6856_Agenda_2_2_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6856" id="lnkMeetingAgendaDoc_6856" target="_blank"
+		   title="Download Agenda for Closed Session City Council on 2/2/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background--off-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">2/2/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Public Comment for Special Monday Meeting</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6858&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Public Comment for Special Monday Meeting City Council on 2/2/2026 10:00:00 AM" id="lnkMeetingAgenda_6858">Public Comment</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Public_Comment_for_Special_Monday_Meeting_6858_Agenda_2_2_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6858" id="lnkMeetingAgendaDoc_6858" target="_blank"
+		   title="Download Agenda for Public Comment for Special Monday Meeting City Council on 2/2/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>1/27/2026</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Public Facilities Financing Authority Adjournment Memo</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6841&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Public Facilities Financing Authority Adjournment Memo City Council on 1/27/2026 2:00:00 PM" id="lnkMeetingAgenda_6841">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Public_Facilities_Financing_Authority_Adjournment_Memo_6841_Agenda_1_27_2026_2_00_00_PM.pdf?documentType=1&amp;meetingId=6841" id="lnkMeetingAgendaDoc_6841" target="_blank"
+		   title="Download Agenda for Public Facilities Financing Authority Adjournment Memo City Council on 1/27/2026 2:00:00 PM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">1/27/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Public Comments for Tuesday Meeting</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6846&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Public Comments for Tuesday Meeting City Council on 1/27/2026 10:00:00 AM" id="lnkMeetingAgenda_6846">Public Comment</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Public_Comments_for_Tuesday_Meeting_6846_Agenda_1_27_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6846" id="lnkMeetingAgendaDoc_6846" target="_blank"
+		   title="Download Agenda for Public Comments for Tuesday Meeting City Council on 1/27/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">1/27/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Tuesday Agenda and Results Summary</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6828&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Tuesday Agenda and Results Summary City Council on 1/27/2026 10:00:00 AM" id="lnkMeetingAgenda_6828">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Tuesday_Agenda_and_Results_Summary_6828_Agenda_1_27_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6828" id="lnkMeetingAgendaDoc_6828" target="_blank"
+		   title="Download Agenda for Tuesday Agenda and Results Summary City Council on 1/27/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6828&amp;doctype=3&amp;site=council"
+		   title="View Summary for Tuesday Agenda and Results Summary City Council on 1/27/2026 10:00:00 AM" id="lnkMeetingSummary_6828">Summary</a>
+		<!--<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Documents/DownloadFile/Tuesday_Agenda_and_Results_Summary_6828_Summary_1_27_2026_10_00_00_AM.pdf?documentType=3&amp;meetingId=6828" id="lnkMeetingSummaryDoc_6828" target="_blank"
+		   title="Download Summary for Tuesday Agenda and Results Summary City Council on 1/27/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background--off-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>1/26/2026</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Special Housing Authority and Closed Session</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6844&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Special Housing Authority and Closed Session City Council on 1/26/2026 10:00:00 AM" id="lnkMeetingAgenda_6844">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Special_Housing_Authority_and_Closed_Session_6844_Agenda_1_26_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6844" id="lnkMeetingAgendaDoc_6844" target="_blank"
+		   title="Download Agenda for Special Housing Authority and Closed Session City Council on 1/26/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background--off-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">1/26/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Closed Session</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6843&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Closed Session City Council on 1/26/2026 10:00:00 AM" id="lnkMeetingAgenda_6843">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Closed_Session_6843_Agenda_1_26_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6843" id="lnkMeetingAgendaDoc_6843" target="_blank"
+		   title="Download Agenda for Closed Session City Council on 1/26/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background--off-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">1/26/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Monday Agenda and Results Summary</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6827&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Monday Agenda and Results Summary City Council on 1/26/2026 10:00:00 AM" id="lnkMeetingAgenda_6827">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Monday_Agenda_and_Results_Summary_6827_Agenda_1_26_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6827" id="lnkMeetingAgendaDoc_6827" target="_blank"
+		   title="Download Agenda for Monday Agenda and Results Summary City Council on 1/26/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6827&amp;doctype=3&amp;site=council"
+		   title="View Summary for Monday Agenda and Results Summary City Council on 1/26/2026 10:00:00 AM" id="lnkMeetingSummary_6827">Summary</a>
+		<!--<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Documents/DownloadFile/Monday_Agenda_and_Results_Summary_6827_Summary_1_26_2026_10_00_00_AM.pdf?documentType=3&amp;meetingId=6827" id="lnkMeetingSummaryDoc_6827" target="_blank"
+		   title="Download Summary for Monday Agenda and Results Summary City Council on 1/26/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background--off-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">1/26/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Public Comments for Monday Meeting</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6852&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Public Comments for Monday Meeting City Council on 1/26/2026 10:00:00 AM" id="lnkMeetingAgenda_6852">Public Comment</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Public_Comments_for_Monday_Meeting_6852_Agenda_1_26_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6852" id="lnkMeetingAgendaDoc_6852" target="_blank"
+		   title="Download Agenda for Public Comments for Monday Meeting City Council on 1/26/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>1/20/2026</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Adjourned Agenda</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6830&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Adjourned Agenda City Council on 1/20/2026 10:00:00 AM" id="lnkMeetingAgenda_6830">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Adjourned_Agenda_6830_Agenda_1_20_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6830" id="lnkMeetingAgendaDoc_6830" target="_blank"
+		   title="Download Agenda for Adjourned Agenda City Council on 1/20/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background--off-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>1/19/2026</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Adjourned Agenda</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6829&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Adjourned Agenda City Council on 1/19/2026 10:00:00 AM" id="lnkMeetingAgenda_6829">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Adjourned_Agenda_6829_Agenda_1_19_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6829" id="lnkMeetingAgendaDoc_6829" target="_blank"
+		   title="Download Agenda for Adjourned Agenda City Council on 1/19/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>1/15/2026</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Special Meeting Memo</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6826&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Special Meeting Memo City Council on 1/15/2026 1:00:00 PM" id="lnkMeetingAgenda_6826">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Special_Meeting_Memo_6826_Agenda_1_15_2026_1_00_00_PM.pdf?documentType=1&amp;meetingId=6826" id="lnkMeetingAgendaDoc_6826" target="_blank"
+		   title="Download Agenda for Special Meeting Memo City Council on 1/15/2026 1:00:00 PM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">1/15/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Special Agenda</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6824&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Special Agenda City Council on 1/15/2026 1:00:00 PM" id="lnkMeetingAgenda_6824">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Special_Agenda_6824_Agenda_1_15_2026_1_00_00_PM.pdf?documentType=1&amp;meetingId=6824" id="lnkMeetingAgendaDoc_6824" target="_blank"
+		   title="Download Agenda for Special Agenda City Council on 1/15/2026 1:00:00 PM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">1/15/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Public Comments for Thursday Meeting</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6833&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Public Comments for Thursday Meeting City Council on 1/15/2026 1:00:00 PM" id="lnkMeetingAgenda_6833">Public Comment</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Public_Comments_for_Thursday_Meeting_6833_Agenda_1_15_2026_1_00_00_PM.pdf?documentType=1&amp;meetingId=6833" id="lnkMeetingAgendaDoc_6833" target="_blank"
+		   title="Download Agenda for Public Comments for Thursday Meeting City Council on 1/15/2026 1:00:00 PM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background--off-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>1/13/2026</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Housing Authority</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6319&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Housing Authority City Council on 1/13/2026 2:00:00 PM" id="lnkMeetingAgenda_6319">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Housing_Authority_6319_Agenda_1_13_2026_2_00_00_PM.pdf?documentType=1&amp;meetingId=6319" id="lnkMeetingAgendaDoc_6319" target="_blank"
+		   title="Download Agenda for Housing Authority City Council on 1/13/2026 2:00:00 PM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background--off-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">1/13/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Public Comments for Tuesday Meeting</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6823&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Public Comments for Tuesday Meeting City Council on 1/13/2026 10:00:00 AM" id="lnkMeetingAgenda_6823">Public Comment</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Public_Comments_for_Tuesday_Meeting_6823_Agenda_1_13_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6823" id="lnkMeetingAgendaDoc_6823" target="_blank"
+		   title="Download Agenda for Public Comments for Tuesday Meeting City Council on 1/13/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background--off-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">1/13/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Tuesday Agenda and Results Summary</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6805&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Tuesday Agenda and Results Summary City Council on 1/13/2026 10:00:00 AM" id="lnkMeetingAgenda_6805">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Tuesday_Agenda_and_Results_Summary_6805_Agenda_1_13_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6805" id="lnkMeetingAgendaDoc_6805" target="_blank"
+		   title="Download Agenda for Tuesday Agenda and Results Summary City Council on 1/13/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6805&amp;doctype=3&amp;site=council"
+		   title="View Summary for Tuesday Agenda and Results Summary City Council on 1/13/2026 10:00:00 AM" id="lnkMeetingSummary_6805">Summary</a>
+		<!--<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Documents/DownloadFile/Tuesday_Agenda_and_Results_Summary_6805_Summary_1_13_2026_10_00_00_AM.pdf?documentType=3&amp;meetingId=6805" id="lnkMeetingSummaryDoc_6805" target="_blank"
+		   title="Download Summary for Tuesday Agenda and Results Summary City Council on 1/13/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>1/12/2026</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Public Facilities Financing Authority Adjournment Memo</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6817&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Public Facilities Financing Authority Adjournment Memo City Council on 1/12/2026 2:00:00 PM" id="lnkMeetingAgenda_6817">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Public_Facilities_Financing_Authority_Adjournment_Memo_6817_Agenda_1_12_2026_2_00_00_PM.pdf?documentType=1&amp;meetingId=6817" id="lnkMeetingAgendaDoc_6817" target="_blank"
+		   title="Download Agenda for Public Facilities Financing Authority Adjournment Memo City Council on 1/12/2026 2:00:00 PM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">1/12/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Monday Agenda and Results Summary</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6804&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Monday Agenda and Results Summary City Council on 1/12/2026 10:00:00 AM" id="lnkMeetingAgenda_6804">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Monday_Agenda_and_Results_Summary_6804_Agenda_1_12_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6804" id="lnkMeetingAgendaDoc_6804" target="_blank"
+		   title="Download Agenda for Monday Agenda and Results Summary City Council on 1/12/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6804&amp;doctype=3&amp;site=council"
+		   title="View Summary for Monday Agenda and Results Summary City Council on 1/12/2026 10:00:00 AM" id="lnkMeetingSummary_6804">Summary</a>
+		<!--<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Documents/DownloadFile/Monday_Agenda_and_Results_Summary_6804_Summary_1_12_2026_10_00_00_AM.pdf?documentType=3&amp;meetingId=6804" id="lnkMeetingSummaryDoc_6804" target="_blank"
+		   title="Download Summary for Monday Agenda and Results Summary City Council on 1/12/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">1/12/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Public Comments for Monday Meeting</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6822&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Public Comments for Monday Meeting City Council on 1/12/2026 10:00:00 AM" id="lnkMeetingAgenda_6822">Public Comment</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Public_Comments_for_Monday_Meeting_6822_Agenda_1_12_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6822" id="lnkMeetingAgendaDoc_6822" target="_blank"
+		   title="Download Agenda for Public Comments for Monday Meeting City Council on 1/12/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">1/12/2026</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Closed Session</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6818&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Closed Session City Council on 1/12/2026 10:00:00 AM" id="lnkMeetingAgenda_6818">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Closed_Session_6818_Agenda_1_12_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6818" id="lnkMeetingAgendaDoc_6818" target="_blank"
+		   title="Download Agenda for Closed Session City Council on 1/12/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background--off-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>1/6/2026</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Adjourned Agenda</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6811&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Adjourned Agenda City Council on 1/6/2026 10:00:00 AM" id="lnkMeetingAgenda_6811">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Adjourned_Agenda_6811_Agenda_1_6_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6811" id="lnkMeetingAgendaDoc_6811" target="_blank"
+		   title="Download Agenda for Adjourned Agenda City Council on 1/6/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>1/5/2026</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Adjourned Agenda</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6810&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Adjourned Agenda City Council on 1/5/2026 10:00:00 AM" id="lnkMeetingAgenda_6810">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Adjourned_Agenda_6810_Agenda_1_5_2026_10_00_00_AM.pdf?documentType=1&amp;meetingId=6810" id="lnkMeetingAgendaDoc_6810" target="_blank"
+		   title="Download Agenda for Adjourned Agenda City Council on 1/5/2026 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background--off-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>12/30/2025</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Adjourned Agenda</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6809&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Adjourned Agenda City Council on 12/30/2025 10:00:00 AM" id="lnkMeetingAgenda_6809">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Adjourned_Agenda_6809_Agenda_12_30_2025_10_00_00_AM.pdf?documentType=1&amp;meetingId=6809" id="lnkMeetingAgendaDoc_6809" target="_blank"
+		   title="Download Agenda for Adjourned Agenda City Council on 12/30/2025 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>12/29/2025</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Adjourned Agenda</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6808&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Adjourned Agenda City Council on 12/29/2025 10:00:00 AM" id="lnkMeetingAgenda_6808">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Adjourned_Agenda_6808_Agenda_12_29_2025_10_00_00_AM.pdf?documentType=1&amp;meetingId=6808" id="lnkMeetingAgendaDoc_6808" target="_blank"
+		   title="Download Agenda for Adjourned Agenda City Council on 12/29/2025 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background--off-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>12/23/2025</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Adjourned Agenda</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6807&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Adjourned Agenda City Council on 12/23/2025 10:00:00 AM" id="lnkMeetingAgenda_6807">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Adjourned_Agenda_6807_Agenda_12_23_2025_10_00_00_AM.pdf?documentType=1&amp;meetingId=6807" id="lnkMeetingAgendaDoc_6807" target="_blank"
+		   title="Download Agenda for Adjourned Agenda City Council on 12/23/2025 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>12/22/2025</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Adjourned Agenda</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6806&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Adjourned Agenda City Council on 12/22/2025 10:00:00 AM" id="lnkMeetingAgenda_6806">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Adjourned_Agenda_6806_Agenda_12_22_2025_10_00_00_AM.pdf?documentType=1&amp;meetingId=6806" id="lnkMeetingAgendaDoc_6806" target="_blank"
+		   title="Download Agenda for Adjourned Agenda City Council on 12/22/2025 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background--off-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>12/17/2025</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Public Comments for Wednesday Special Meeting</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6803&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Public Comments for Wednesday Special Meeting City Council on 12/17/2025 10:00:00 AM" id="lnkMeetingAgenda_6803">Public Comment</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Public_Comments_for_Wednesday_Special_Meeting_6803_Agenda_12_17_2025_10_00_00_AM.pdf?documentType=1&amp;meetingId=6803" id="lnkMeetingAgendaDoc_6803" target="_blank"
+		   title="Download Agenda for Public Comments for Wednesday Special Meeting City Council on 12/17/2025 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background--off-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">12/17/2025</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Special Agenda and Results Summary</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6784&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Special Agenda and Results Summary City Council on 12/17/2025 10:00:00 AM" id="lnkMeetingAgenda_6784">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Special_Agenda_and_Results_Summary_6784_Agenda_12_17_2025_10_00_00_AM.pdf?documentType=1&amp;meetingId=6784" id="lnkMeetingAgendaDoc_6784" target="_blank"
+		   title="Download Agenda for Special Agenda and Results Summary City Council on 12/17/2025 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6784&amp;doctype=3&amp;site=council"
+		   title="View Summary for Special Agenda and Results Summary City Council on 12/17/2025 10:00:00 AM" id="lnkMeetingSummary_6784">Summary</a>
+		<!--<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Documents/DownloadFile/Special_Agenda_and_Results_Summary_6784_Summary_12_17_2025_10_00_00_AM.pdf?documentType=3&amp;meetingId=6784" id="lnkMeetingSummaryDoc_6784" target="_blank"
+		   title="Download Summary for Special Agenda and Results Summary City Council on 12/17/2025 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background--off-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">12/17/2025</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Special Housing Authority and Memo</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6794&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Special Housing Authority and Memo City Council on 12/17/2025 10:00:00 AM" id="lnkMeetingAgenda_6794">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Special_Housing_Authority_and_Memo_6794_Agenda_12_17_2025_10_00_00_AM.pdf?documentType=1&amp;meetingId=6794" id="lnkMeetingAgendaDoc_6794" target="_blank"
+		   title="Download Agenda for Special Housing Authority and Memo City Council on 12/17/2025 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background--off-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">12/17/2025</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Special Meeting Memo</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6793&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Special Meeting Memo City Council on 12/17/2025 10:00:00 AM" id="lnkMeetingAgenda_6793">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Special_Meeting_Memo_6793_Agenda_12_17_2025_10_00_00_AM.pdf?documentType=1&amp;meetingId=6793" id="lnkMeetingAgendaDoc_6793" target="_blank"
+		   title="Download Agenda for Special Meeting Memo City Council on 12/17/2025 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>12/16/2025</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Housing Authority Adjournment Memo</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6798&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Housing Authority Adjournment Memo City Council on 12/16/2025 10:00:00 AM" id="lnkMeetingAgenda_6798">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Housing_Authority_Adjournment_Memo_6798_Agenda_12_16_2025_10_00_00_AM.pdf?documentType=1&amp;meetingId=6798" id="lnkMeetingAgendaDoc_6798" target="_blank"
+		   title="Download Agenda for Housing Authority Adjournment Memo City Council on 12/16/2025 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">12/16/2025</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Special Meeting Memo</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6797&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Special Meeting Memo City Council on 12/16/2025 10:00:00 AM" id="lnkMeetingAgenda_6797">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Special_Meeting_Memo_6797_Agenda_12_16_2025_10_00_00_AM.pdf?documentType=1&amp;meetingId=6797" id="lnkMeetingAgendaDoc_6797" target="_blank"
+		   title="Download Agenda for Special Meeting Memo City Council on 12/16/2025 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">12/16/2025</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Public Facilities Financing Authority Adjournment Memo</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6796&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Public Facilities Financing Authority Adjournment Memo City Council on 12/16/2025 10:00:00 AM" id="lnkMeetingAgenda_6796">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Public_Facilities_Financing_Authority_Adjournment_Memo_6796_Agenda_12_16_2025_10_00_00_AM.pdf?documentType=1&amp;meetingId=6796" id="lnkMeetingAgendaDoc_6796" target="_blank"
+		   title="Download Agenda for Public Facilities Financing Authority Adjournment Memo City Council on 12/16/2025 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">12/16/2025</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Special Agenda and Results Summary</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6783&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Special Agenda and Results Summary City Council on 12/16/2025 10:00:00 AM" id="lnkMeetingAgenda_6783">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Special_Agenda_and_Results_Summary_6783_Agenda_12_16_2025_10_00_00_AM.pdf?documentType=1&amp;meetingId=6783" id="lnkMeetingAgendaDoc_6783" target="_blank"
+		   title="Download Agenda for Special Agenda and Results Summary City Council on 12/16/2025 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6783&amp;doctype=3&amp;site=council"
+		   title="View Summary for Special Agenda and Results Summary City Council on 12/16/2025 10:00:00 AM" id="lnkMeetingSummary_6783">Summary</a>
+		<!--<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Documents/DownloadFile/Special_Agenda_and_Results_Summary_6783_Summary_12_16_2025_10_00_00_AM.pdf?documentType=3&amp;meetingId=6783" id="lnkMeetingSummaryDoc_6783" target="_blank"
+		   title="Download Summary for Special Agenda and Results Summary City Council on 12/16/2025 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">12/16/2025</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Public Comments for Tuesday Special Meeting</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6802&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Public Comments for Tuesday Special Meeting City Council on 12/16/2025 10:00:00 AM" id="lnkMeetingAgenda_6802">Public Comment</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Public_Comments_for_Tuesday_Special_Meeting_6802_Agenda_12_16_2025_10_00_00_AM.pdf?documentType=1&amp;meetingId=6802" id="lnkMeetingAgendaDoc_6802" target="_blank"
+		   title="Download Agenda for Public Comments for Tuesday Special Meeting City Council on 12/16/2025 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background--off-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>12/15/2025</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Public Comments for Monday Meeting</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6801&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Public Comments for Monday Meeting City Council on 12/15/2025 10:00:00 AM" id="lnkMeetingAgenda_6801">Public Comment</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Public_Comments_for_Monday_Meeting_6801_Agenda_12_15_2025_10_00_00_AM.pdf?documentType=1&amp;meetingId=6801" id="lnkMeetingAgendaDoc_6801" target="_blank"
+		   title="Download Agenda for Public Comments for Monday Meeting City Council on 12/15/2025 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background--off-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">12/15/2025</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Monday Agenda and Results Summary</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6782&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Monday Agenda and Results Summary City Council on 12/15/2025 10:00:00 AM" id="lnkMeetingAgenda_6782">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Monday_Agenda_and_Results_Summary_6782_Agenda_12_15_2025_10_00_00_AM.pdf?documentType=1&amp;meetingId=6782" id="lnkMeetingAgendaDoc_6782" target="_blank"
+		   title="Download Agenda for Monday Agenda and Results Summary City Council on 12/15/2025 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6782&amp;doctype=3&amp;site=council"
+		   title="View Summary for Monday Agenda and Results Summary City Council on 12/15/2025 10:00:00 AM" id="lnkMeetingSummary_6782">Summary</a>
+		<!--<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Documents/DownloadFile/Monday_Agenda_and_Results_Summary_6782_Summary_12_15_2025_10_00_00_AM.pdf?documentType=3&amp;meetingId=6782" id="lnkMeetingSummaryDoc_6782" target="_blank"
+		   title="Download Summary for Monday Agenda and Results Summary City Council on 12/15/2025 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background--off-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">12/15/2025</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Closed Session</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6800&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Closed Session City Council on 12/15/2025 10:00:00 AM" id="lnkMeetingAgenda_6800">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Closed_Session_6800_Agenda_12_15_2025_10_00_00_AM.pdf?documentType=1&amp;meetingId=6800" id="lnkMeetingAgendaDoc_6800" target="_blank"
+		   title="Download Agenda for Closed Session City Council on 12/15/2025 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>12/9/2025</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Tuesday Agenda and Results Summary</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6781&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Tuesday Agenda and Results Summary City Council on 12/9/2025 10:00:00 AM" id="lnkMeetingAgenda_6781">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Tuesday_Agenda_and_Results_Summary_6781_Agenda_12_9_2025_10_00_00_AM.pdf?documentType=1&amp;meetingId=6781" id="lnkMeetingAgendaDoc_6781" target="_blank"
+		   title="Download Agenda for Tuesday Agenda and Results Summary City Council on 12/9/2025 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6781&amp;doctype=3&amp;site=council"
+		   title="View Summary for Tuesday Agenda and Results Summary City Council on 12/9/2025 10:00:00 AM" id="lnkMeetingSummary_6781">Summary</a>
+		<!--<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Documents/DownloadFile/Tuesday_Agenda_and_Results_Summary_6781_Summary_12_9_2025_10_00_00_AM.pdf?documentType=3&amp;meetingId=6781" id="lnkMeetingSummaryDoc_6781" target="_blank"
+		   title="Download Summary for Tuesday Agenda and Results Summary City Council on 12/9/2025 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">12/9/2025</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Public Comments for Tuesday Meeting</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6792&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Public Comments for Tuesday Meeting City Council on 12/9/2025 10:00:00 AM" id="lnkMeetingAgenda_6792">Public Comment</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Public_Comments_for_Tuesday_Meeting_6792_Agenda_12_9_2025_10_00_00_AM.pdf?documentType=1&amp;meetingId=6792" id="lnkMeetingAgendaDoc_6792" target="_blank"
+		   title="Download Agenda for Public Comments for Tuesday Meeting City Council on 12/9/2025 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+						<hr class="l-margin-vn border--dark">
+					<div class="row l-padding-vd l-padding-mobile-hd background--off-white">
+						<div class="two columns l-padding-desktop-lm">
+							<p class="l-margin-desktop-vs l-margin-mobile-bd date"><strong>12/8/2025</strong></p>
+						</div>
+						<div class="ten columns">
+							<div class="row">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bn">Public Comments for Monday Meeting</p>
+								</div>
+								<div class="six columns l-margin-mobile-td">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6791&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Public Comments for Monday Meeting City Council on 12/8/2025 10:00:00 AM" id="lnkMeetingAgenda_6791">Public Comment</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Public_Comments_for_Monday_Meeting_6791_Agenda_12_8_2025_10_00_00_AM.pdf?documentType=1&amp;meetingId=6791" id="lnkMeetingAgendaDoc_6791" target="_blank"
+		   title="Download Agenda for Public Comments for Monday Meeting City Council on 12/8/2025 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background--off-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">12/8/2025</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Closed Session</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6789&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Closed Session City Council on 12/8/2025 10:00:00 AM" id="lnkMeetingAgenda_6789">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Closed_Session_6789_Agenda_12_8_2025_10_00_00_AM.pdf?documentType=1&amp;meetingId=6789" id="lnkMeetingAgendaDoc_6789" target="_blank"
+		   title="Download Agenda for Closed Session City Council on 12/8/2025 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row l-padding-mobile-hd background--off-white">
+						<div class="two columns hide-on-mobile">
+							<p class="l-margin-vs"><span class="visuallyhidden">12/8/2025</span>&nbsp;</p>
+						</div>
+						<div class="ten columns">
+							<hr class="l-margin-vn hr--dashed">
+							<div class="row l-padding-vd">
+								<div class="six columns">
+									<p class="l-margin-desktop-vs l-margin-mobile-bd">Monday Agenda and Results Summary</p>
+								</div>
+								<div class="six columns">
+									<p class="l-margin-bn">		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6780&amp;doctype=1&amp;site=council"
+		   title="View Agenda for Monday Agenda and Results Summary City Council on 12/8/2025 10:00:00 AM" id="lnkMeetingAgenda_6780">Agenda</a>
+		<!--<a class="btn" href="/211agendaonlinecouncil/Documents/Downloadfile/Monday_Agenda_and_Results_Summary_6780_Agenda_12_8_2025_10_00_00_AM.pdf?documentType=1&amp;meetingId=6780" id="lnkMeetingAgendaDoc_6780" target="_blank"
+		   title="Download Agenda for Monday Agenda and Results Summary City Council on 12/8/2025 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+		<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Meetings/ViewMeeting?id=6780&amp;doctype=3&amp;site=council"
+		   title="View Summary for Monday Agenda and Results Summary City Council on 12/8/2025 10:00:00 AM" id="lnkMeetingSummary_6780">Summary</a>
+		<!--<a class="btn l-margin-mobile-bs" href="/211agendaonlinecouncil/Documents/DownloadFile/Monday_Agenda_and_Results_Summary_6780_Summary_12_8_2025_10_00_00_AM.pdf?documentType=3&amp;meetingId=6780" id="lnkMeetingSummaryDoc_6780" target="_blank"
+		   title="Download Summary for Monday Agenda and Results Summary City Council on 12/8/2025 10:00:00 AM">
+			<img src="~/Images/PDF_16x16.png" />
+		</a>-->
+</p>
+								</div>
+							</div>
+						</div>
+					</div>
+	</div>
+
+							</div>
+				</div>
+			</div>
+<script src="/211agendaonlinecouncil/bundles/meetinglisttabs?v=51hsMNIHnj_B_3yXTotEAkYgxxYtAo8UTLYAzCngnCA1"></script>
+
+	<div id="footer-results-message">
+	</div>
+</div>
+
+<script src="/211agendaonlinecouncil/bundles/meetinglistsort?v=Zyu7yuvwuJ4fcqfIpoVt-6d6DcwlDK9_67_62s3mKkY1"></script>
+
+
+
+
+
+
+        </div>
+		<div class="post-meeting-grid-spacer">
+			TEXT;
+		</div>
+    </section>
+
+		<section class="content-wrapper main-content clear-fix l-constrained">
+			
+
+
+
+
+
+
+		</section>
+	</div>
+	<div class="footer">
+		<!--<div class="container">
+			<div class="row">
+                <div class="col-md-12 no-padding-left">
+                    <img src="~/Images/OnBase_Logo.png" class="onbase-logo" />
+                    Copyright &#169; 2015-2026 Hyland Software, Inc.
+                </div>
+			</div>
+		</div>-->
+		<div class="footer__privacy l-constrained">
+			<div class="row text-center l-padding-vd background-off-white">
+				<ul>
+					<li>Copyright &#169; 2026 City of San Diego</li>
+					<li><a href="https://www.sandiego.gov/disclaimers">Disclaimers</a></li>
+					<li><a href="https://www.sandiego.gov/privacy-policy">Privacy Policy</a></li>
+					<li><a href="https://www.sandiego.gov/accessibility">Accessibility</a></li>
+					<li><a href="https://www.sandiego.gov/contact">Contact the City</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<script src="/211agendaonlinecouncil/bundles/corescripts?v=6h0g3m818gbdrW57_Q6xLaHjZitU5RtArUxI7lFhH9E1"></script>
+
+	<script src="/211agendaonlinecouncil/Scripts/cosd-onbase.js"></script>
+
+</body>
+</html>
