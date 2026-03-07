@@ -2,6 +2,17 @@
 
 San Diego City Council Advocacy Discord Bot — scrapes council meeting agendas and notifies users when topics they care about appear on upcoming agendas.
 
+## Required Info
+
+- **Team name:** TBD
+- **Team members:** TBD
+- **Problem statement:** San Diego residents who want to participate in city council meetings have no easy way to track when topics they care about appear on upcoming agendas. They must manually check the Hyland portal, which is tedious and easy to miss.
+- **What it does:** A Discord bot that scrapes San Diego city council meeting agendas from the Hyland Agenda Online portal and sends alerts when watched keywords appear on upcoming agendas. Users subscribe to topics via slash commands and receive notifications with meeting details, matched agenda items, and public comment opportunities.
+- **Data sources used:** [San Diego City Council Hyland Agenda Online portal](https://sandiego.hylandcloud.com/211agendaonlinecouncil) — meeting schedules, agenda documents, and public comment listings
+- **Architecture / approach:** Python Discord bot (`discord.py`) with background tasks that periodically scrape the Hyland portal (`httpx` + `BeautifulSoup`), store meetings/agendas in SQLite (`aiosqlite`), match against user keyword watches, and send Discord embed notifications with dedup and per-topic channel routing.
+- **Links:** TBD
+- **Demo video:** TBD
+
 ## Judging Criteria
 
 Evaluation framework from the [City of SD Impact Lab Hackathon](https://github.com/Backland-Labs/city-of-sd-hackathon). Four categories, each scored 1-5, totaling 20 points maximum.
