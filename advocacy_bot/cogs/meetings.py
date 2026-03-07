@@ -1,4 +1,5 @@
 import discord
+from collections import defaultdict
 from discord import app_commands
 from discord.ext import commands
 
@@ -15,16 +16,43 @@ class MeetingsCog(commands.Cog):
             await interaction.followup.send("No upcoming meetings found. The scraper may not have run yet.", ephemeral=True)
             return
 
+        # Group by date; nest public comment entries as sub-links under main meetings
+        by_date = defaultdict(lambda: {"main": [], "public_comment": []})
+        for m in meetings:
+            key = m.date.date() if m.date else None
+            bucket = "public_comment" if m.meeting_type == "Public Comment" else "main"
+            by_date[key][bucket].append(m)
+
         embed = discord.Embed(title="Upcoming Meetings", color=discord.Color.blurple())
-        for m in meetings[:10]:
-            date_str = discord.utils.format_dt(m.date, style="F") if m.date else "TBD"
-            embed.add_field(
-                name=f"{m.title} (ID: {m.id})",
-                value=f"{date_str}\nType: {m.meeting_type}",
-                inline=False,
-            )
-        if len(meetings) > 10:
-            embed.set_footer(text=f"Showing 10 of {len(meetings)} meetings")
+        shown = 0
+        for date_key in sorted(by_date):
+            group = by_date[date_key]
+            anchor = (group["main"] or group["public_comment"])[0]
+            date_str = discord.utils.format_dt(anchor.date, style="D") if anchor.date else "TBD"
+
+            # Main meeting rows, with public comment linked inline
+            pc_used = set()
+            for m in group["main"]:
+                links = f"[Agenda]({m.url})"
+                pc = next((p for p in group["public_comment"]), None)
+                if pc:
+                    links += f" · [Public Comment]({pc.url})"
+                    pc_used.add(pc.id)
+                embed.add_field(name=f"{date_str} — {m.title}", value=links, inline=False)
+                shown += 1
+
+            # Any public comment entries with no matching main meeting
+            for p in group["public_comment"]:
+                if p.id not in pc_used:
+                    embed.add_field(name=f"{date_str} — {p.title}", value=f"[Public Comment]({p.url})", inline=False)
+                    shown += 1
+
+            if shown >= 10:
+                break
+
+        total = len(meetings)
+        if total > shown:
+            embed.set_footer(text=f"Showing {shown} of {total} meetings")
         await interaction.followup.send(embed=embed)
 
     @app_commands.command(name="agenda", description="Show agenda items for a meeting")
@@ -68,8 +96,21 @@ class MeetingsCog(commands.Cog):
         if text_parts:
             embed.add_field(name=current_section or "Items", value="\n".join(text_parts), inline=False)
 
-        if meeting.url:
-            embed.add_field(name="Full Agenda", value=meeting.url, inline=False)
+        links = f"[Full Agenda]({meeting.url})"
+
+        # Link to public comment meeting on the same date if one exists
+        if meeting.date:
+            all_meetings = await self.bot.db.get_meetings(interaction.guild_id)
+            pc = next(
+                (m for m in all_meetings
+                 if m.meeting_type == "Public Comment"
+                 and m.date and m.date.date() == meeting.date.date()),
+                None,
+            )
+            if pc:
+                links += f" · [Public Comment]({pc.url})"
+
+        embed.add_field(name="Links", value=links, inline=False)
 
         if len(items) > 25:
             embed.set_footer(text=f"Showing 25 of {len(items)} items")
