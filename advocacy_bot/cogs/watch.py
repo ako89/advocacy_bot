@@ -142,49 +142,5 @@ class WatchCog(commands.Cog):
         await _send_channel_watches(interaction, self.bot, target.id)
 
 
-    @app_commands.command(name="channelwatches", description="List all keyword watches routed to a channel")
-    @app_commands.describe(channel="The channel to check (defaults to current channel)")
-    async def channelwatches(self, interaction: discord.Interaction, channel: discord.TextChannel | None = None):
-        target = channel or interaction.channel
-        routes = await self.bot.db.get_channel_routes(interaction.guild_id)
-        settings = await self.bot.db.get_guild_settings(interaction.guild_id)
-        default_channel_id = settings.get("default_channel_id")
-
-        # Find keywords explicitly routed to this channel
-        routed_keywords = [r.keyword for r in routes if r.channel_id == target.id and r.keyword]
-
-        # Check if this channel is the default
-        is_default = target.id == default_channel_id
-        explicitly_routed = {r.keyword for r in routes if r.keyword}
-
-        # Get all guild watches
-        all_watches = await self.bot.db.get_guild_watches(interaction.guild_id)
-        all_keywords = set(w.keyword for w in all_watches)
-
-        # Keywords that go to default (not explicitly routed elsewhere)
-        default_keywords = []
-        if is_default:
-            default_keywords = sorted(all_keywords - explicitly_routed)
-
-        if not routed_keywords and not default_keywords:
-            await interaction.response.send_message(
-                f"No watches are routed to {target.mention}.", ephemeral=True,
-            )
-            return
-
-        embed = discord.Embed(
-            title=f"Watches for {target.name}",
-            color=discord.Color.blurple(),
-        )
-        if routed_keywords:
-            lines = [f"- `{kw}`" for kw in sorted(routed_keywords)]
-            embed.add_field(name="Routed Topics", value="\n".join(lines), inline=False)
-        if default_keywords:
-            lines = [f"- `{kw}`" for kw in default_keywords]
-            embed.add_field(name="Via Default Channel", value="\n".join(lines), inline=False)
-
-        await interaction.response.send_message(embed=embed, ephemeral=True)
-
-
 async def setup(bot: commands.Bot):
     await bot.add_cog(WatchCog(bot))
