@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import hashlib
+from datetime import timezone
 from pathlib import Path
 from unittest.mock import AsyncMock, MagicMock, patch
 
@@ -93,6 +94,43 @@ async def test_scrape_meeting_list_finds_public_comment():
 
     types = {m.meeting_type for m in meetings}
     assert "Public Comment" in types, "Should detect public comment meetings"
+
+
+@pytest.mark.asyncio
+async def test_scrape_meeting_list_dates_are_timezone_aware():
+    html = (FIXTURES / "home.html").read_text()
+    mock_resp = _make_response(html)
+
+    mock_client = AsyncMock()
+    mock_client.__aenter__ = AsyncMock(return_value=mock_client)
+    mock_client.__aexit__ = AsyncMock(return_value=False)
+    mock_client.get = AsyncMock(return_value=mock_resp)
+
+    with patch("advocacy_bot.scraper._make_client", return_value=mock_client):
+        meetings = await scrape_meeting_list("https://example.com/portal", delay=0)
+
+    for m in meetings:
+        if m.date:
+            assert m.date.tzinfo is not None, f"Meeting {m.id} date should be timezone-aware"
+
+
+@pytest.mark.asyncio
+async def test_scrape_meeting_list_dates_distinct_per_row():
+    """Meetings on different dates in the same div.border block get distinct dates."""
+    html = (FIXTURES / "home.html").read_text()
+    mock_resp = _make_response(html)
+
+    mock_client = AsyncMock()
+    mock_client.__aenter__ = AsyncMock(return_value=mock_client)
+    mock_client.__aexit__ = AsyncMock(return_value=False)
+    mock_client.get = AsyncMock(return_value=mock_resp)
+
+    with patch("advocacy_bot.scraper._make_client", return_value=mock_client):
+        meetings = await scrape_meeting_list("https://example.com/portal", delay=0)
+
+    dated = [m for m in meetings if m.date]
+    dates = {m.date.date() for m in dated}
+    assert len(dates) > 1, "Should see meetings on multiple distinct dates"
 
 
 # ---------------------------------------------------------------------------
