@@ -1,7 +1,10 @@
 import logging
+from datetime import datetime, timedelta, timezone
 import discord
 from discord import app_commands
 from discord.ext import commands
+from ..matcher import find_matches
+from ..notifier import send_notifications
 
 log = logging.getLogger("advocacy_bot.admin")
 
@@ -48,6 +51,43 @@ class AdminCog(commands.Cog):
         embed.add_field(name="Watching Users", value=str(unique_users), inline=True)
 
         await interaction.response.send_message(embed=embed, ephemeral=True)
+
+
+    @app_commands.command(name="testnotify", description="Fire notifications for all matches in the last week (ignores dedup)")
+    @app_commands.checks.has_permissions(administrator=True)
+    async def testnotify(self, interaction: discord.Interaction):
+        await interaction.response.defer(ephemeral=True)
+
+        cutoff = datetime.now(timezone.utc) - timedelta(days=7)
+        all_meetings = await self.bot.db.get_meetings(interaction.guild_id)
+        recent = [m for m in all_meetings if m.date and m.date.replace(tzinfo=timezone.utc) >= cutoff]
+
+        if not recent:
+            await interaction.followup.send("No meetings found in the last 7 days.", ephemeral=True)
+            return
+
+        items_by_meeting = {}
+        for m in recent:
+            items_by_meeting[m.id] = await self.bot.db.get_agenda_items(m.id, interaction.guild_id)
+
+        watches = await self.bot.db.get_guild_watches(interaction.guild_id)
+        if not watches:
+            await interaction.followup.send("No watches set up in this server.", ephemeral=True)
+            return
+
+        results = find_matches(watches, recent, items_by_meeting)
+        if not results:
+            await interaction.followup.send(
+                f"No matches found across {len(recent)} meeting(s) and {len(watches)} watch(es).",
+                ephemeral=True,
+            )
+            return
+
+        await send_notifications(self.bot, self.bot.db, results, force=True)
+        await interaction.followup.send(
+            f"Sent {len(results)} notification(s) from {len(recent)} meeting(s).",
+            ephemeral=True,
+        )
 
 
 async def setup(bot: commands.Bot):

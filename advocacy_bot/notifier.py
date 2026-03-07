@@ -57,6 +57,7 @@ async def send_notifications(
     bot: discord.Client,
     db: Database,
     results: list[MatchResult],
+    force: bool = False,
 ):
     """Send notification embeds, respecting dedup and channel routing."""
     for result in results:
@@ -64,15 +65,18 @@ async def send_notifications(
         if not guild:
             continue
 
-        # Check dedup for each item
-        unsent_items = []
-        for item in result.items:
-            already = await db.has_notification_been_sent(
-                result.watch.guild_id, result.watch.user_id,
-                result.meeting.id, item.id, result.match_type,
-            )
-            if not already:
-                unsent_items.append(item)
+        # Check dedup for each item (skipped when force=True)
+        if force:
+            unsent_items = list(result.items)
+        else:
+            unsent_items = []
+            for item in result.items:
+                already = await db.has_notification_been_sent(
+                    result.watch.guild_id, result.watch.user_id,
+                    result.meeting.id, item.id, result.match_type,
+                )
+                if not already:
+                    unsent_items.append(item)
 
         if not unsent_items:
             continue
