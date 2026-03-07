@@ -39,7 +39,7 @@ class ScrapeTask(commands.Cog):
 
         # Match and notify — only for upcoming meetings
         now = datetime.now(timezone.utc)
-        upcoming = [m for m in meetings if m.date and m.date >= now]
+        upcoming = [m for m in meetings if m.date and m.date.replace(tzinfo=timezone.utc) >= now]
         watches = await self.bot.db.get_guild_watches(guild_id)
         if watches and upcoming:
             upcoming_items = {m.id: items_by_meeting[m.id] for m in upcoming}
