@@ -135,12 +135,26 @@ class MeetingsCog(commands.Cog):
                 inline=False,
             )
 
+        def _flush_section(name, parts):
+            """Add section parts as one or more fields, respecting the 1024-char limit."""
+            chunk, length = [], 0
+            first = True
+            for part in parts:
+                line_len = len(part) + 1  # +1 for newline
+                if chunk and length + line_len > 1024:
+                    embed.add_field(name=name if first else f"{name} (cont.)", value="\n".join(chunk), inline=False)
+                    chunk, length, first = [], 0, False
+                chunk.append(part)
+                length += line_len
+            if chunk:
+                embed.add_field(name=name if first else f"{name} (cont.)", value="\n".join(chunk), inline=False)
+
         current_section = ""
         text_parts = []
         for item in displayed:
             if item.section != current_section:
                 if text_parts:
-                    embed.add_field(name=current_section or "Items", value="\n".join(text_parts), inline=False)
+                    _flush_section(current_section or "Items", text_parts)
                     text_parts = []
                 current_section = item.section
             label = f"**{item.item_number}**: {item.title[:80]}" if item.item_number else item.title[:80]
@@ -153,7 +167,7 @@ class MeetingsCog(commands.Cog):
             text_parts.append(label)
 
         if text_parts:
-            embed.add_field(name=current_section or "Items", value="\n".join(text_parts), inline=False)
+            _flush_section(current_section or "Items", text_parts)
 
         links = f"[Full Agenda]({meeting.url})"
 
