@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime, timezone
 from discord.ext import commands, tasks
 from ..config import SCRAPE_INTERVAL_MINUTES
 from ..scraper import scrape_meeting_list, scrape_agenda
@@ -36,10 +37,13 @@ class ScrapeTask(commands.Cog):
             items_by_meeting[meeting.id] = items
             count += 1
 
-        # Match and notify
+        # Match and notify — only for upcoming meetings
+        now = datetime.now(timezone.utc)
+        upcoming = [m for m in meetings if m.date and m.date >= now]
         watches = await self.bot.db.get_guild_watches(guild_id)
-        if watches:
-            results = find_matches(watches, meetings, items_by_meeting)
+        if watches and upcoming:
+            upcoming_items = {m.id: items_by_meeting[m.id] for m in upcoming}
+            results = find_matches(watches, upcoming, upcoming_items)
             await send_notifications(self.bot, self.bot.db, results)
 
         return count
