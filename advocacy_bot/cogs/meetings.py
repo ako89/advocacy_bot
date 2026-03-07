@@ -41,13 +41,15 @@ class MeetingsCog(commands.Cog):
                 if pc:
                     links += f" · [Public Comment]({pc.url})"
                     pc_used.add(pc.id)
+                links += f"\n`/agenda meeting_id:{m.id}`"
                 embed.add_field(name=f"{date_str} — {m.title}", value=links, inline=False)
                 shown += 1
 
             # Any public comment entries with no matching main meeting
             for p in group["public_comment"]:
                 if p.id not in pc_used:
-                    embed.add_field(name=f"{date_str} — {p.title}", value=f"[Public Comment]({p.url})", inline=False)
+                    value = f"[Public Comment]({p.url})\n`/agenda meeting_id:{p.id}`"
+                    embed.add_field(name=f"{date_str} — {p.title}", value=value, inline=False)
                     shown += 1
 
             if shown >= 10:
