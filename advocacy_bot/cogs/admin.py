@@ -9,6 +9,7 @@ from ..notifier import send_notifications
 log = logging.getLogger("advocacy_bot.admin")
 
 
+@app_commands.default_permissions(administrator=True)
 class AdminCog(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
