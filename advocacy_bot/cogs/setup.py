@@ -178,6 +178,7 @@ class Step2View(discord.ui.View):
         self.stop()
 
 
+@app_commands.default_permissions(manage_channels=True)
 class SetupCog(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
