@@ -2,48 +2,49 @@
 
 A Discord bot that monitors San Diego City Council meeting agendas and notifies users when topics they care about appear. Helps advocates stay on top of public comment opportunities without manually checking the portal.
 
+## Required Info
+
+- **Team name:** Advocacy Bot
+- **Team members:** Chris Chow, Andres Kodaka
+- **Problem statement:** San Diego residents who want to participate in city council meetings have no easy way to track when topics they care about appear on upcoming agendas. They must manually check the Hyland portal, which is tedious and easy to miss.
+- **What it does:** A Discord bot that scrapes San Diego city council meeting agendas from the Hyland Agenda Online portal and sends alerts when watched keywords appear on upcoming agendas. Users subscribe to topics via slash commands and receive notifications with meeting details, matched agenda items, and public comment opportunities.
+- **Data sources used:** [San Diego City Council Hyland Agenda Online portal](https://sandiego.hylandcloud.com/211agendaonlinecouncil) — meeting schedules, agenda documents, and public comment listings
+- **Architecture / approach:** Python Discord bot (`discord.py`) with background tasks that periodically scrape the Hyland portal (`httpx` + `BeautifulSoup`), store meetings/agendas in SQLite (`aiosqlite`), match against user keyword watches, and send Discord embed notifications with dedup and per-topic channel routing.
+- **Links:** TBD
+- **Demo video:** TBD
+
 ## Architecture
 
 Everything runs in a single process (one Docker container). The scraper fetches the Hyland portal every 4 hours; the bot handles Discord I/O and user commands.
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        Single Process (Docker)                   │
-│                                                                  │
-│  ┌──────────────────────────────────────────────────────────┐   │
-│  │                      AdvocacyBot                          │   │
-│  │                                                           │   │
-│  │  ┌─────────────┐  ┌──────────────┐  ┌─────────────────┐ │   │
-│  │  │    cogs/     │  │    tasks/    │  │    Database      │ │   │
-│  │  │  watch.py    │  │  scrape_     │  │   (aiosqlite)    │ │   │
-│  │  │  meetings.py │  │  task.py  ◄──┼──┤                  │ │   │
-│  │  │  channels.py │  │              │  │  meetings        │ │   │
-│  │  │  admin.py    │  │  reminder_   │  │  agenda_items    │ │   │
-│  │  └──────┬───────┘  │  task.py  ◄──┼──┤  watches         │ │   │
-│  │         │          └──────┬───────┘  │  channel_routes  │ │   │
-│  │         │                 │          │  notifications_  │ │   │
-│  │         │          ┌──────▼───────┐  │  sent            │ │   │
-│  │         │          │  scraper.py  │  │  guild_settings  │ │   │
-│  │         │          │  matcher.py  │  └─────────────────┘ │   │
-│  │         │          │  notifier.py │                       │   │
-│  │         │          └──────┬───────┘                       │   │
-│  └─────────┼─────────────────┼─────────────────────────────┘   │
-│            │                 │                                    │
-└────────────┼─────────────────┼────────────────────────────────── ┘
-             │                 │
-             ▼                 ▼
-      Discord API       sandiego.hylandcloud.com
-     (slash commands,   (HTML scrape, ~every 4h)
-      notifications)
+```mermaid
+graph TD
+    subgraph Docker["Single Process (Docker)"]
+        subgraph Bot["AdvocacyBot"]
+            Cogs["cogs/\nwatch.py\nmeetings.py\nchannels.py\nadmin.py"]
+            Tasks["tasks/\nscrape_task\nreminder_task"]
+            Core["scraper.py\nmatcher.py\nnotifier.py"]
+            DB[("Database\naiosqlite\n─────────\nmeetings\nagenda_items\nwatches\nchannel_routes\nnotifications\nguild_settings")]
+        end
+    end
+
+    Tasks --> Core
+    Tasks <--> DB
+    Core --> DB
+    Cogs <--> DB
+
+    Core -->|"HTML scrape\n~every 4h"| Portal["sandiego.hylandcloud.com"]
+    Cogs -->|"slash commands\nnotifications"| Discord["Discord API"]
 ```
 
 ### Future: separating the scraper
 
 If semantic matching (embeddings, clustering) is added, the ML model load and memory pressure make a split worthwhile. The natural boundary is the shared database:
 
-```
-scraper-service  ──► SQLite / Postgres ◄──  bot-service
-(scrape + embed)    (shared data store)      (Discord I/O)
+```mermaid
+graph LR
+    Scraper["scraper-service\nscrape + embed"] -->|write| DB[("SQLite / Postgres")]
+    DB -->|read| BotSvc["bot-service\nDiscord I/O"]
 ```
 
 The scraper writes meetings and items; the bot reads and sends notifications. No message queue needed as long as both services share a database.
@@ -66,24 +67,31 @@ The scraper writes meetings and items; the bot reads and sends notifications. No
 | `/forcescrape` | Administrator | Trigger immediate scrape |
 | `/botstatus` | Administrator | Bot health/stats |
 
-## Setup
+## Deployment
 
-Copy `.env.example` to `.env` and fill in your Discord token, then:
+Requires Docker with the Compose plugin on the host.
+
+**First time:**
 
 ```sh
-docker-compose up -d
+git clone https://github.com/ako89/advocacy_bot.git
+cd advocacy_bot
+cp .env.example .env
+# Edit .env and set DISCORD_TOKEN
+docker compose up -d --build
 ```
 
-## Required Info
+**Updates:**
 
-- **Team name: Advocacy Bot
-- **Team members: Chris Chow, Andres Kodaka
-- **Problem statement: San Diego residents who want to participate in city council meetings have no easy way to track when topics they care about appear on upcoming agendas. They must manually check the Hyland portal, which is tedious and easy to miss.
-- **What it does:** A Discord bot that scrapes San Diego city council meeting agendas from the Hyland Agenda Online portal and sends alerts when watched keywords appear on upcoming agendas. Users subscribe to topics via slash commands and receive notifications with meeting details, matched agenda items, and public comment opportunities.
-- **Data sources used:** [San Diego City Council Hyland Agenda Online portal](https://sandiego.hylandcloud.com/211agendaonlinecouncil) — meeting schedules, agenda documents, and public comment listings
-- **Architecture / approach:** Python Discord bot (`discord.py`) with background tasks that periodically scrape the Hyland portal (`httpx` + `BeautifulSoup`), store meetings/agendas in SQLite (`aiosqlite`), match against user keyword watches, and send Discord embed notifications with dedup and per-topic channel routing.
-- **Links:** TBD
-- **Demo video:** TBD
+```sh
+bash scripts/deploy.sh
+```
+
+**Logs:**
+
+```sh
+docker compose logs -f
+```
 
 ## Judging Criteria
 
