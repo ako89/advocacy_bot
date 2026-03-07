@@ -45,29 +45,16 @@ async def _send_channel_watches(
 ):
     guild_id = interaction.guild_id
     routes = await bot.db.get_routes_for_channel(guild_id, channel_id)
-    settings = await bot.db.get_guild_settings(guild_id)
-    default_channel_id = settings.get("default_channel_id")
-    is_default = channel_id == default_channel_id
 
-    # Keywords explicitly routed to this channel
     routed_keywords = sorted([r.keyword for r in routes if r.keyword])
-
-    # Keywords that fall through to default
-    default_keywords = []
-    if is_default:
-        all_routes = await bot.db.get_channel_routes(guild_id)
-        explicitly_routed = {r.keyword for r in all_routes if r.keyword}
-        all_watches = await bot.db.get_guild_watches(guild_id)
-        all_keywords = set(w.keyword for w in all_watches)
-        default_keywords = sorted(all_keywords - explicitly_routed)
 
     channel = interaction.guild.get_channel(channel_id)
     ch_mention = channel.mention if channel else f"<#{channel_id}>"
 
-    if not routed_keywords and not default_keywords:
+    if not routed_keywords:
         embed = discord.Embed(
             title=f"Watches for {channel.name if channel else 'channel'}",
-            description=f"No watches are routed to {ch_mention}.",
+            description=f"No watches set up for {ch_mention}.\nUse `/advocacysetup` or `/routetopic` to add topics.",
             color=discord.Color.greyple(),
         )
         if edit:
@@ -81,15 +68,9 @@ async def _send_channel_watches(
         color=discord.Color.blurple(),
     )
 
-    if routed_keywords:
-        lines = [f"- `{kw}`" for kw in routed_keywords]
-        embed.add_field(name="Routed Topics", value="\n".join(lines), inline=False)
-
-    if default_keywords:
-        lines = [f"- `{kw}`" for kw in default_keywords]
-        embed.add_field(name="Via Default Channel", value="\n".join(lines), inline=False)
-
-    embed.set_footer(text="Press a button to remove a routed topic from this channel.")
+    lines = [f"- `{kw}`" for kw in routed_keywords]
+    embed.add_field(name="Active Topics", value="\n".join(lines), inline=False)
+    embed.set_footer(text="Press a button to remove a topic from this channel.")
 
     # Only add remove buttons for explicitly routed keywords (not default fallthrough)
     view = ChannelWatchesView(bot, routed_keywords, channel_id) if routed_keywords else None
