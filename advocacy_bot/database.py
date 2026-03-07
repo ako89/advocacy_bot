@@ -90,8 +90,8 @@ class Database:
         )
         if row:
             old_hash = row[0]["content_hash"]
-            if old_hash == m.content_hash:
-                return False
+            # Always update metadata (date, title, url) so corrections propagate.
+            # Only return True (signals "content changed, re-notify") when hash differs.
             await self.db.execute(
                 """UPDATE meetings SET title=?, date=?, meeting_type=?, doc_type=?,
                    url=?, content_hash=? WHERE id=? AND guild_id=?""",
@@ -100,7 +100,7 @@ class Database:
                  m.id, guild_id),
             )
             await self.db.commit()
-            return True
+            return old_hash != m.content_hash
         await self.db.execute(
             """INSERT OR IGNORE INTO meetings
                (id, guild_id, title, date, meeting_type, doc_type, url, content_hash)
