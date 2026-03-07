@@ -1,9 +1,9 @@
-version: "3.8"
-
 services:
   bot:
     build: .
     env_file: .env
+    environment:
+      DATABASE_PATH: /app/data/advocacy_bot.db
     volumes:
       - bot-data:/app/data
     restart: unless-stopped

@@ -140,3 +140,29 @@ Clear communication of what was built, why it matters, and intended audience.
 | 3 | Adequate presentation but missing clarity on problem, audience, or impact |
 | 2 | Disorganized or hard to follow |
 | 1 | No clear communication of the project's purpose |
+
+## Deployment
+
+Requires Docker with the Compose plugin on the host.
+
+**First time:**
+
+```sh
+git clone https://github.com/ako89/advocacy_bot.git
+cd advocacy_bot
+cp .env.example .env
+# Edit .env and set DISCORD_TOKEN
+docker compose up -d --build
+```
+
+**Updates:**
+
+```sh
+bash scripts/deploy.sh
+```
+
+**Logs:**
+
+```sh
+docker compose logs -f
+```
