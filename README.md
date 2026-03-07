@@ -21,10 +21,10 @@ Everything runs in a single process (one Docker container). The scraper fetches 
 graph TD
     subgraph Docker["Single Process (Docker)"]
         subgraph Bot["AdvocacyBot"]
-            Cogs["cogs/\nwatch.py\nmeetings.py\nchannels.py\nadmin.py"]
-            Tasks["tasks/\nscrape_task\nreminder_task"]
-            Core["scraper.py\nmatcher.py\nnotifier.py"]
-            DB[("Database\naiosqlite\n─────────\nmeetings\nagenda_items\nwatches\nchannel_routes\nnotifications\nguild_settings")]
+            Cogs["cogs/<br>watch.py · meetings.py<br>channels.py · admin.py"]
+            Tasks["tasks/<br>scrape_task · reminder_task"]
+            Core["scraper.py<br>matcher.py<br>notifier.py"]
+            DB[("Database (aiosqlite)<br>meetings · agenda_items<br>watches · channel_routes<br>notifications · guild_settings")]
         end
     end
 
@@ -33,8 +33,8 @@ graph TD
     Core --> DB
     Cogs <--> DB
 
-    Core -->|"HTML scrape\n~every 4h"| Portal["sandiego.hylandcloud.com"]
-    Cogs -->|"slash commands\nnotifications"| Discord["Discord API"]
+    Core -->|"HTML scrape, every 4h"| Portal["sandiego.hylandcloud.com"]
+    Cogs -->|"slash commands / notifications"| Discord["Discord API"]
 ```
 
 ### Future: separating the scraper
@@ -43,8 +43,8 @@ If semantic matching (embeddings, clustering) is added, the ML model load and me
 
 ```mermaid
 graph LR
-    Scraper["scraper-service\nscrape + embed"] -->|write| DB[("SQLite / Postgres")]
-    DB -->|read| BotSvc["bot-service\nDiscord I/O"]
+    Scraper["scraper-service<br>(scrape + embed)"] -->|write| DB[("SQLite / Postgres")]
+    DB -->|read| BotSvc["bot-service<br>(Discord I/O)"]
 ```
 
 The scraper writes meetings and items; the bot reads and sends notifications. No message queue needed as long as both services share a database.
