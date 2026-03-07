@@ -76,14 +76,104 @@ docker-compose up -d
 
 ## Required Info
 
-- **Team name: Advocacy Bot
-- **Team members: Chris Chow, Andres Kodaka
-- **Problem statement: San Diego residents who want to participate in city council meetings have no easy way to track when topics they care about appear on upcoming agendas. They must manually check the Hyland portal, which is tedious and easy to miss.
+- **Team name:** Advocacy Bot
+- **Team members:** Chris Chow, Andres Kodaka
+- **Problem statement:** San Diego residents who want to participate in city council meetings have no easy way to track when topics they care about appear on upcoming agendas. They must manually check the Hyland portal, which is tedious and easy to miss.
 - **What it does:** A Discord bot that scrapes San Diego city council meeting agendas from the Hyland Agenda Online portal and sends alerts when watched keywords appear on upcoming agendas. Users subscribe to topics via slash commands and receive notifications with meeting details, matched agenda items, and public comment opportunities.
 - **Data sources used:** [San Diego City Council Hyland Agenda Online portal](https://sandiego.hylandcloud.com/211agendaonlinecouncil) — meeting schedules, agenda documents, and public comment listings
 - **Architecture / approach:** Python Discord bot (`discord.py`) with background tasks that periodically scrape the Hyland portal (`httpx` + `BeautifulSoup`), store meetings/agendas in SQLite (`aiosqlite`), match against user keyword watches, and send Discord embed notifications with dedup and per-topic channel routing.
 - **Links:** TBD
 - **Demo video:** TBD
+
+## Architecture
+
+Everything runs in a single process (one Docker container). The scraper fetches the Hyland portal every 4 hours; the bot handles Discord I/O and user commands.
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        Single Process (Docker)                   │
+│                                                                  │
+│  ┌──────────────────────────────────────────────────────────┐   │
+│  │                      AdvocacyBot                          │   │
+│  │                                                           │   │
+│  │  ┌─────────────┐  ┌──────────────┐  ┌─────────────────┐ │   │
+│  │  │    cogs/     │  │    tasks/    │  │    Database      │ │   │
+│  │  │  watch.py    │  │  scrape_     │  │   (aiosqlite)    │ │   │
+│  │  │  meetings.py │  │  task.py  ◄──┼──┤                  │ │   │
+│  │  │  channels.py │  │              │  │  meetings        │ │   │
+│  │  │  admin.py    │  │  reminder_   │  │  agenda_items    │ │   │
+│  │  └──────┬───────┘  │  task.py  ◄──┼──┤  watches         │ │   │
+│  │         │          └──────┬───────┘  │  channel_routes  │ │   │
+│  │         │                 │          │  notifications_  │ │   │
+│  │         │          ┌──────▼───────┐  │  sent            │ │   │
+│  │         │          │  scraper.py  │  │  guild_settings  │ │   │
+│  │         │          │  matcher.py  │  └─────────────────┘ │   │
+│  │         │          │  notifier.py │                       │   │
+│  │         │          └──────┬───────┘                       │   │
+│  └─────────┼─────────────────┼─────────────────────────────┘   │
+│            │                 │                                    │
+└────────────┼─────────────────┼────────────────────────────────── ┘
+             │                 │
+             ▼                 ▼
+      Discord API       sandiego.hylandcloud.com
+     (slash commands,   (HTML scrape, ~every 4h)
+      notifications)
+```
+
+### Future: separating the scraper
+
+If semantic matching (embeddings, clustering) is added, the ML model load and memory pressure make a split worthwhile. The natural boundary is the shared database:
+
+```
+scraper-service  ──► SQLite / Postgres ◄──  bot-service
+(scrape + embed)    (shared data store)      (Discord I/O)
+```
+
+The scraper writes meetings and items; the bot reads and sends notifications. No message queue needed as long as both services share a database.
+
+## Commands
+
+| Command | Permission | Description |
+|---|---|---|
+| `/watch <keyword>` | Any user | Subscribe to topic alerts |
+| `/unwatch <keyword>` | Any user | Remove subscription |
+| `/mywatches` | Any user | List your watches |
+| `/nextmeeting` | Any user | Show upcoming meetings |
+| `/agenda [meeting_id]` | Any user | Show agenda items |
+| `/search <keyword>` | Any user | Search current agendas |
+| `/setchannel [channel]` | Manage Channels | Set default alert channel |
+| `/routetopic <keyword> <channel>` | Manage Channels | Route topic to channel |
+| `/routes` | Manage Channels | List all routes |
+| `/setreminder <hours>` | Manage Channels | Set reminder lead time |
+| `/settings` | Manage Channels | View guild settings |
+| `/forcescrape` | Administrator | Trigger immediate scrape |
+| `/botstatus` | Administrator | Bot health/stats |
+
+## Deployment
+
+Requires Docker with the Compose plugin on the host.
+
+**First time:**
+
+```sh
+git clone https://github.com/ako89/advocacy_bot.git
+cd advocacy_bot
+cp .env.example .env
+# Edit .env and set DISCORD_TOKEN
+docker compose up -d --build
+```
+
+**Updates:**
+
+```sh
+bash scripts/deploy.sh
+```
+
+**Logs:**
+
+```sh
+docker compose logs -f
+```
 
 ## Judging Criteria
 
@@ -140,29 +230,3 @@ Clear communication of what was built, why it matters, and intended audience.
 | 3 | Adequate presentation but missing clarity on problem, audience, or impact |
 | 2 | Disorganized or hard to follow |
 | 1 | No clear communication of the project's purpose |
-
-## Deployment
-
-Requires Docker with the Compose plugin on the host.
-
-**First time:**
-
-```sh
-git clone https://github.com/ako89/advocacy_bot.git
-cd advocacy_bot
-cp .env.example .env
-# Edit .env and set DISCORD_TOKEN
-docker compose up -d --build
-```
-
-**Updates:**
-
-```sh
-bash scripts/deploy.sh
-```
-
-**Logs:**
-
-```sh
-docker compose logs -f
-```
