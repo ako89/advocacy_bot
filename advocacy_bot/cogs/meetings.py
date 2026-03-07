@@ -18,8 +18,8 @@ class MeetingsCog(commands.Cog):
         for m in meetings[:10]:
             date_str = discord.utils.format_dt(m.date, style="F") if m.date else "TBD"
             embed.add_field(
-                name=f"{m.title} (ID: {m.id})",
-                value=f"{date_str}\nType: {m.meeting_type}",
+                name=m.title,
+                value=f"ID: `{m.id}`\n{date_str}\nType: {m.meeting_type}",
                 inline=False,
             )
         if len(meetings) > 10:
@@ -27,9 +27,40 @@ class MeetingsCog(commands.Cog):
         await interaction.response.send_message(embed=embed)
 
     @app_commands.command(name="agenda", description="Show agenda items for a meeting")
-    @app_commands.describe(meeting_id="The meeting ID (from /nextmeeting)")
-    async def agenda(self, interaction: discord.Interaction, meeting_id: int):
-        meeting = await self.bot.db.get_meeting(meeting_id, interaction.guild_id)
+    @app_commands.describe(
+        meeting_id="The meeting ID (from /nextmeeting)",
+        date="Meeting date (YYYY-MM-DD) — finds meetings on that date",
+    )
+    async def agenda(self, interaction: discord.Interaction, meeting_id: int | None = None, date: str | None = None):
+        if not meeting_id and not date:
+            await interaction.response.send_message(
+                "Provide a `meeting_id` or a `date` (YYYY-MM-DD).", ephemeral=True,
+            )
+            return
+
+        meeting = None
+        if date:
+            meetings = await self.bot.db.get_meetings_by_date(interaction.guild_id, date.strip())
+            if not meetings:
+                await interaction.response.send_message(f"No meetings found on **{date}**.", ephemeral=True)
+                return
+            if len(meetings) == 1:
+                meeting = meetings[0]
+            else:
+                embed = discord.Embed(title=f"Meetings on {date}", color=discord.Color.blurple())
+                for m in meetings:
+                    date_str = discord.utils.format_dt(m.date, style="t") if m.date else ""
+                    embed.add_field(
+                        name=f"{m.title} (ID: {m.id})",
+                        value=f"{date_str}\nUse `/agenda meeting_id:{m.id}` to view",
+                        inline=False,
+                    )
+                await interaction.response.send_message(embed=embed)
+                return
+
+        if meeting_id and not meeting:
+            meeting = await self.bot.db.get_meeting(meeting_id, interaction.guild_id)
+
         if not meeting:
             await interaction.response.send_message("Meeting not found.", ephemeral=True)
             return

@@ -18,6 +18,16 @@ class ChannelsCog(commands.Cog):
             f"Default alert channel set to {target.mention}.", ephemeral=True,
         )
 
+    @app_commands.command(name="unsetchannel", description="Remove the default alert channel")
+    @app_commands.checks.has_permissions(manage_channels=True)
+    async def unsetchannel(self, interaction: discord.Interaction):
+        removed = await self.bot.db.remove_channel_route(interaction.guild_id, None)
+        await self.bot.db.update_guild_settings(interaction.guild_id, default_channel_id=None)
+        if removed:
+            await interaction.response.send_message("Default alert channel has been removed.", ephemeral=True)
+        else:
+            await interaction.response.send_message("No default channel was set.", ephemeral=True)
+
     @app_commands.command(name="routetopic", description="Route a keyword's alerts to a specific channel")
     @app_commands.describe(keyword="The keyword to route", channel="The target channel")
     @app_commands.checks.has_permissions(manage_channels=True)

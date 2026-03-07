@@ -126,6 +126,15 @@ class Database:
             )
         return [_row_to_meeting(r) for r in rows]
 
+    async def get_meetings_by_date(self, guild_id: int, date_str: str) -> list[Meeting]:
+        """Find meetings on a given date (YYYY-MM-DD)."""
+        assert self.db
+        rows = await self.db.execute_fetchall(
+            "SELECT * FROM meetings WHERE guild_id = ? AND date(date) = ? ORDER BY date ASC",
+            (guild_id, date_str),
+        )
+        return [_row_to_meeting(r) for r in rows]
+
     async def get_meeting(self, meeting_id: int, guild_id: int) -> Meeting | None:
         assert self.db
         rows = await self.db.execute_fetchall(
@@ -233,6 +242,15 @@ class Database:
             (guild_id, keyword, channel_id, channel_id),
         )
         await self.db.commit()
+
+    async def remove_channel_route(self, guild_id: int, keyword: str | None) -> bool:
+        assert self.db
+        cursor = await self.db.execute(
+            "DELETE FROM channel_routes WHERE guild_id = ? AND keyword IS ?",
+            (guild_id, keyword),
+        )
+        await self.db.commit()
+        return cursor.rowcount > 0
 
     async def get_channel_routes(self, guild_id: int) -> list[ChannelRoute]:
         assert self.db

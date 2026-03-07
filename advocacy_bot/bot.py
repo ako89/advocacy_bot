@@ -12,6 +12,7 @@ EXTENSIONS = [
     "advocacy_bot.cogs.meetings",
     "advocacy_bot.cogs.channels",
     "advocacy_bot.cogs.admin",
+    "advocacy_bot.cogs.setup",
     "advocacy_bot.tasks.scrape_task",
     "advocacy_bot.tasks.reminder_task",
 ]
@@ -29,10 +30,15 @@ class AdvocacyBot(commands.Bot):
         for ext in EXTENSIONS:
             await self.load_extension(ext)
             log.info("Loaded extension %s", ext)
+        self.tree.clear_commands(guild=None)
         await self.tree.sync()
-        log.info("Slash commands synced")
+        log.info("Cleared global commands")
 
     async def on_ready(self):
+        for guild in self.guilds:
+            self.tree.copy_global_to(guild=guild)
+            await self.tree.sync(guild=guild)
+            log.info("Synced commands to guild %s", guild.id)
         log.info("Logged in as %s (ID: %s)", self.user, self.user.id)
 
     async def close(self):
