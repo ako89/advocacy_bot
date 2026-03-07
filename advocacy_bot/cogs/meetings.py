@@ -135,26 +135,45 @@ class MeetingsCog(commands.Cog):
                 inline=False,
             )
 
-        def _flush_section(name, parts):
-            """Add section parts as one or more fields, respecting the 1024-char limit."""
-            chunk, length = [], 0
-            first = True
+        def _chunk_section(name, parts):
+            """Return (field_name, field_value) tuples respecting the 1024-char limit."""
+            chunks, chunk, length, first = [], [], 0, True
             for part in parts:
-                line_len = len(part) + 1  # +1 for newline
+                line_len = len(part) + 1
                 if chunk and length + line_len > 1024:
-                    embed.add_field(name=name if first else f"{name} (cont.)", value="\n".join(chunk), inline=False)
+                    chunks.append((name if first else f"{name} (cont.)", "\n".join(chunk)))
                     chunk, length, first = [], 0, False
                 chunk.append(part)
                 length += line_len
             if chunk:
-                embed.add_field(name=name if first else f"{name} (cont.)", value="\n".join(chunk), inline=False)
+                chunks.append((name if first else f"{name} (cont.)", "\n".join(chunk)))
+            return chunks
 
+        def _embed_size():
+            total = len(embed.title or "") + len(embed.description or "")
+            for f in embed.fields:
+                total += len(f.name) + len(f.value)
+            if embed.footer and embed.footer.text:
+                total += len(embed.footer.text)
+            return total
+
+        def _add_section(name, parts):
+            """Add chunked section fields, stopping if total embed would exceed 5800 chars."""
+            for field_name, field_value in _chunk_section(name, parts):
+                if _embed_size() + len(field_name) + len(field_value) > 5800:
+                    return False
+                embed.add_field(name=field_name, value=field_value, inline=False)
+            return True
+
+        truncated = False
         current_section = ""
         text_parts = []
         for item in displayed:
             if item.section != current_section:
                 if text_parts:
-                    _flush_section(current_section or "Items", text_parts)
+                    if not _add_section(current_section or "Items", text_parts):
+                        truncated = True
+                        break
                     text_parts = []
                 current_section = item.section
             label = f"**{item.item_number}**: {item.title[:80]}" if item.item_number else item.title[:80]
@@ -166,8 +185,8 @@ class MeetingsCog(commands.Cog):
                 label += f"\n  📎 {doc_links}"
             text_parts.append(label)
 
-        if text_parts:
-            _flush_section(current_section or "Items", text_parts)
+        if text_parts and not truncated:
+            _add_section(current_section or "Items", text_parts)
 
         links = f"[Full Agenda]({meeting.url})"
 
@@ -185,8 +204,9 @@ class MeetingsCog(commands.Cog):
 
         embed.add_field(name="Links", value=links, inline=False)
 
-        if len(items) > 25:
-            embed.set_footer(text=f"Showing 25 of {len(items)} items")
+        if truncated or len(items) > 25:
+            shown = len(embed.fields) - 2  # subtract Date and Links fields
+            embed.set_footer(text=f"Agenda too large to display fully — see full agenda link above")
 
         await interaction.followup.send(embed=embed)
 
