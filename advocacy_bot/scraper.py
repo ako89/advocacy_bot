@@ -6,6 +6,9 @@ import hashlib
 import re
 from datetime import datetime
 from urllib.parse import urljoin
+from zoneinfo import ZoneInfo
+
+_PACIFIC = ZoneInfo("America/Los_Angeles")
 
 import httpx
 from bs4 import BeautifulSoup
@@ -13,6 +16,7 @@ from bs4 import BeautifulSoup
 from .models import AgendaItem, Meeting
 
 _DATE_RE = re.compile(r"\d{1,2}/\d{1,2}/\d{4}")
+_DATETIME_RE = re.compile(r"on (\d{1,2}/\d{1,2}/\d{4} \d{1,2}:\d{2}:\d{2} [AP]M)")
 _MEETING_ID_RE = re.compile(r"[?&]id=(\d+)")
 _DOCTYPE_RE = re.compile(r"[?&]doctype=(\d+)")
 
@@ -41,19 +45,25 @@ async def scrape_meeting_list(base_url: str, delay: float = 2.0) -> list[Meeting
     soup = BeautifulSoup(resp.text, "html.parser")
     meetings: list[Meeting] = []
 
-    # Each date group is a div.border block. Within it, the date is in p.date > strong
-    # and each meeting row contains an anchor with ViewMeeting in the href.
+    # A single div.border block can contain multiple date groups separated by <hr>.
+    # We walk rows in order, updating current_date whenever we see a p.date > strong.
+    # Full datetime (including time) is extracted from the link's title attribute, e.g.:
+    #   "View Agenda for ... City Council on 3/10/2026 10:00:00 AM"
+    # Dates are marked as Pacific time (America/Los_Angeles) since the portal is San Diego.
     for date_block in soup.select("div.border"):
-        date_tag = date_block.select_one("p.date strong")
-        raw_date = date_tag.get_text(strip=True) if date_tag else ""
-        meeting_date: datetime | None = None
-        if _DATE_RE.match(raw_date):
-            try:
-                meeting_date = datetime.strptime(raw_date, "%m/%d/%Y")
-            except ValueError:
-                pass
+        current_date: datetime | None = None
 
         for row in date_block.select("div.row"):
+            # Update current date if this row has a date header
+            date_tag = row.select_one("p.date strong")
+            if date_tag:
+                raw_date = date_tag.get_text(strip=True)
+                if _DATE_RE.match(raw_date):
+                    try:
+                        current_date = datetime.strptime(raw_date, "%m/%d/%Y").replace(tzinfo=_PACIFIC)
+                    except ValueError:
+                        pass
+
             # Find the title paragraph (no anchor, just text)
             title_p = row.select_one("div.six.columns > p")
             title = title_p.get_text(strip=True) if title_p else ""
@@ -69,9 +79,21 @@ async def scrape_meeting_list(base_url: str, delay: float = 2.0) -> list[Meeting
                     continue
 
                 meeting_id = int(id_match.group(1))
-                btn_text = a.get_text(strip=True)  # "Agenda", "Public Comment", etc.
+                btn_text = a.get_text(strip=True)
                 meeting_type = "Public Comment" if "public comment" in btn_text.lower() else "City Council"
                 full_url = urljoin(base_url, href)
+
+                # Extract full datetime from link title attribute if available
+                meeting_date = current_date
+                title_attr = a.get("title", "")
+                dt_m = _DATETIME_RE.search(title_attr)
+                if dt_m:
+                    try:
+                        meeting_date = datetime.strptime(
+                            dt_m.group(1), "%m/%d/%Y %I:%M:%S %p"
+                        ).replace(tzinfo=_PACIFIC)
+                    except ValueError:
+                        pass
 
                 meetings.append(
                     Meeting(
