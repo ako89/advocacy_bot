@@ -35,9 +35,29 @@ async def test_upsert_meeting(db):
                 meeting_type="City Council", doc_type="agenda",
                 url="http://example.com", content_hash="abc123", guild_id=1)
     assert await db.upsert_meeting(m, 1)  # new
-    assert not await db.upsert_meeting(m, 1)  # same hash
+    assert not await db.upsert_meeting(m, 1)  # same hash — no content change
     m.content_hash = "def456"
     assert await db.upsert_meeting(m, 1)  # changed
+
+
+@pytest.mark.asyncio
+async def test_upsert_meeting_date_corrects_without_hash_change(db):
+    """Date correction should persist even when agenda content hash is unchanged."""
+    wrong_date = datetime(2026, 3, 2, tzinfo=timezone.utc)
+    correct_date = datetime(2026, 2, 24, 10, 0, 0, tzinfo=timezone.utc)
+
+    m = Meeting(id=6870, title="Monday Agenda", date=wrong_date,
+                meeting_type="City Council", doc_type="agenda",
+                url="http://example.com", content_hash="abc123", guild_id=1)
+    await db.upsert_meeting(m, 1)
+
+    # Same hash, but date corrected
+    m.date = correct_date
+    changed = await db.upsert_meeting(m, 1)
+    assert not changed, "Same hash should not signal content change"
+
+    stored = await db.get_meeting(6870, 1)
+    assert stored.date == correct_date, "Corrected date should be persisted despite same hash"
 
 
 @pytest.mark.asyncio
