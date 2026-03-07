@@ -90,28 +90,15 @@ async def send_notifications(
         )
         embed = build_embed(filtered)
 
-        # Determine channel
-        channel_id = await db.get_route_for_keyword(
-            result.watch.guild_id, result.watch.keyword,
-        )
-        if not channel_id:
-            settings = await db.get_guild_settings(result.watch.guild_id)
-            channel_id = settings.get("default_channel_id")
-        if not channel_id:
-            continue
-
-        channel = guild.get_channel(channel_id)
-        if not channel or not isinstance(channel, discord.TextChannel):
-            continue
-
-        mention = f"<@{result.watch.user_id}>"
+        # Send as a DM to the watching user
         try:
-            await channel.send(content=mention, embed=embed)
-            # Record all items as sent
+            user = await bot.fetch_user(result.watch.user_id)
+            await user.send(embed=embed)
             for item in unsent_items:
                 await db.record_notification(
                     result.watch.guild_id, result.watch.user_id,
                     result.meeting.id, item.id, result.match_type,
                 )
-        except discord.Forbidden:
+        except (discord.Forbidden, discord.NotFound):
+            # User has DMs disabled or no longer exists — silently skip
             pass
