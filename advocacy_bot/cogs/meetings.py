@@ -9,9 +9,10 @@ class MeetingsCog(commands.Cog):
 
     @app_commands.command(name="nextmeeting", description="Show upcoming city council meetings")
     async def nextmeeting(self, interaction: discord.Interaction):
+        await interaction.response.defer()
         meetings = await self.bot.db.get_meetings(interaction.guild_id, upcoming_only=True)
         if not meetings:
-            await interaction.response.send_message("No upcoming meetings found. The scraper may not have run yet.", ephemeral=True)
+            await interaction.followup.send("No upcoming meetings found. The scraper may not have run yet.", ephemeral=True)
             return
 
         embed = discord.Embed(title="Upcoming Meetings", color=discord.Color.blurple())
@@ -24,19 +25,20 @@ class MeetingsCog(commands.Cog):
             )
         if len(meetings) > 10:
             embed.set_footer(text=f"Showing 10 of {len(meetings)} meetings")
-        await interaction.response.send_message(embed=embed)
+        await interaction.followup.send(embed=embed)
 
     @app_commands.command(name="agenda", description="Show agenda items for a meeting")
     @app_commands.describe(meeting_id="The meeting ID (from /nextmeeting)")
     async def agenda(self, interaction: discord.Interaction, meeting_id: int):
+        await interaction.response.defer()
         meeting = await self.bot.db.get_meeting(meeting_id, interaction.guild_id)
         if not meeting:
-            await interaction.response.send_message("Meeting not found.", ephemeral=True)
+            await interaction.followup.send("Meeting not found.", ephemeral=True)
             return
 
         items = await self.bot.db.get_agenda_items(meeting_id, interaction.guild_id)
         if not items:
-            await interaction.response.send_message(
+            await interaction.followup.send(
                 f"No agenda items found for **{meeting.title}**.", ephemeral=True,
             )
             return
@@ -72,14 +74,15 @@ class MeetingsCog(commands.Cog):
         if len(items) > 25:
             embed.set_footer(text=f"Showing 25 of {len(items)} items")
 
-        await interaction.response.send_message(embed=embed)
+        await interaction.followup.send(embed=embed)
 
     @app_commands.command(name="search", description="Search agenda items by keyword")
     @app_commands.describe(keyword="Keyword to search for in agenda items")
     async def search(self, interaction: discord.Interaction, keyword: str):
+        await interaction.response.defer()
         results = await self.bot.db.search_agenda_items(interaction.guild_id, keyword.strip())
         if not results:
-            await interaction.response.send_message(
+            await interaction.followup.send(
                 f"No agenda items found matching **{keyword.strip()}**.", ephemeral=True,
             )
             return
@@ -99,7 +102,7 @@ class MeetingsCog(commands.Cog):
             )
         if len(results) > 10:
             embed.set_footer(text=f"Showing 10 of {len(results)} results")
-        await interaction.response.send_message(embed=embed)
+        await interaction.followup.send(embed=embed)
 
 
 async def setup(bot: commands.Bot):

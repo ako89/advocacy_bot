@@ -6,12 +6,13 @@ WORKDIR /app
 
 # Install dependencies before copying source so this layer is cached
 COPY pyproject.toml uv.lock ./
-RUN uv sync --frozen --no-dev
+RUN uv sync --frozen --no-dev --no-install-project
 
 COPY . .
+RUN uv sync --frozen --no-dev
 
 # Run as non-root
 RUN useradd -m botuser && mkdir -p /app/data && chown -R botuser /app
 USER botuser
 
-CMD ["uv", "run", "advocacy-bot"]
+CMD ["/app/.venv/bin/python", "-m", "advocacy_bot.bot"]
