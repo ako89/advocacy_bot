@@ -1,8 +1,7 @@
 name: Build & Push
 
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:  # disabled: GHCR push blocked by org restrictions; use scripts/build.sh locally
 
 jobs:
   build:
