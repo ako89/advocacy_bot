@@ -35,6 +35,12 @@ class AdvocacyBot(commands.Bot):
         for ext in EXTENSIONS:
             await self.load_extension(ext)
             log.info("Loaded extension %s", ext)
+        # Warm up the embedding model so the first match/watch isn't slow
+        try:
+            await self.embedder.embed(["warmup"])
+            log.info("Embedding model warmed up")
+        except Exception:
+            log.exception("Failed to warm up embedding model")
 
     async def on_ready(self):
         # Sync commands per-guild for instant availability
