@@ -146,9 +146,12 @@ class Step2View(discord.ui.View):
         all_topics = self.selected_topics + self.custom_topics
         guild_id = interaction.guild_id
         user_id = interaction.user.id
+        channel_id = self.channel.id
 
         for topic in all_topics:
+            # Create both a user watch and a channel route
             await self.bot.db.add_watch(guild_id, user_id, topic)
+            await self.bot.db.set_channel_route(guild_id, topic.lower(), channel_id)
 
         # Build summary
         if all_topics:
@@ -166,7 +169,7 @@ class Step2View(discord.ui.View):
                 "**Useful commands:**\n"
                 "- `/watch <keyword>` — add more topics\n"
                 "- `/unwatch <keyword>` — remove a topic\n"
-                "- `/mywatches` — see your watches\n"
+                "- `/channelwatches` — manage this channel's watches\n"
                 "- `/routetopic <keyword> <channel>` — send a topic to a specific channel"
             ),
             color=discord.Color.green(),

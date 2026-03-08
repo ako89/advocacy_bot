@@ -262,6 +262,27 @@ class Database:
             keyword=r["keyword"], channel_id=r["channel_id"],
         ) for r in rows]
 
+    async def remove_keyword_route(self, guild_id: int, keyword: str) -> bool:
+        """Remove a specific keyword route."""
+        assert self.db
+        cursor = await self.db.execute(
+            "DELETE FROM channel_routes WHERE guild_id = ? AND keyword = ?",
+            (guild_id, keyword.lower()),
+        )
+        await self.db.commit()
+        return cursor.rowcount > 0
+
+    async def get_routes_for_channel(self, guild_id: int, channel_id: int) -> list[ChannelRoute]:
+        assert self.db
+        rows = await self.db.execute_fetchall(
+            "SELECT * FROM channel_routes WHERE guild_id = ? AND channel_id = ?",
+            (guild_id, channel_id),
+        )
+        return [ChannelRoute(
+            id=r["id"], guild_id=r["guild_id"],
+            keyword=r["keyword"], channel_id=r["channel_id"],
+        ) for r in rows]
+
     async def get_route_for_keyword(self, guild_id: int, keyword: str) -> int | None:
         """Find the best channel for a keyword: specific route > default route."""
         assert self.db

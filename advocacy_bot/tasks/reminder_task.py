@@ -34,7 +34,10 @@ class ReminderTask(commands.Cog):
         now = datetime.now(timezone.utc)
         window_end = now + timedelta(hours=reminder_hours)
 
-        upcoming = [m for m in meetings if m.date and now < m.date <= window_end]
+        upcoming = [
+            m for m in meetings
+            if m.date and now < m.date.replace(tzinfo=timezone.utc) <= window_end
+        ]
         if not upcoming:
             return
 
