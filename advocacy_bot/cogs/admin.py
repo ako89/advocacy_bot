@@ -91,5 +91,68 @@ class AdminCog(commands.Cog):
         )
 
 
+    @app_commands.command(name="testnotifychannel", description="Fire real match notifications to routed channels (ignores dedup)")
+    @app_commands.checks.has_permissions(administrator=True)
+    async def testnotifychannel(self, interaction: discord.Interaction):
+        await interaction.response.defer(ephemeral=True)
+
+        guild_id = interaction.guild_id
+        routes = await self.bot.db.get_channel_routes(guild_id)
+        keyword_routes = [r for r in routes if r.keyword]
+
+        if not keyword_routes:
+            await interaction.followup.send(
+                "No topic routes configured. Use `/advocacysetup` or `/routetopic` to set them up.",
+                ephemeral=True,
+            )
+            return
+
+        all_meetings = await self.bot.db.get_meetings(guild_id, upcoming_only=True)
+        if not all_meetings:
+            await interaction.followup.send("No upcoming meetings in the database. Run `/forcescrape` first.", ephemeral=True)
+            return
+
+        # Build items index
+        items_by_meeting = {}
+        for m in all_meetings:
+            items_by_meeting[m.id] = await self.bot.db.get_agenda_items(m.id, guild_id)
+
+        # For each routed keyword, find matches and send to the routed channel
+        sent = 0
+        failed = 0
+        no_matches = 0
+        for route in keyword_routes:
+            channel = interaction.guild.get_channel(route.channel_id)
+            if not channel or not isinstance(channel, discord.TextChannel):
+                failed += 1
+                continue
+
+            # Create a fake watch for this keyword to use the matcher
+            from ..models import Watch
+            fake_watch = Watch(id=0, guild_id=guild_id, user_id=interaction.user.id, keyword=route.keyword)
+            results = find_matches([fake_watch], all_meetings, items_by_meeting)
+
+            if not results:
+                no_matches += 1
+                continue
+
+            for result in results:
+                from ..notifier import build_embed
+                embed = build_embed(result)
+                embed.set_footer(text="Test notification — triggered by /testnotifychannel")
+                try:
+                    await channel.send(embed=embed)
+                    sent += 1
+                except discord.Forbidden:
+                    failed += 1
+
+        summary = f"Sent {sent} notification(s) to routed channels."
+        if no_matches:
+            summary += f" {no_matches} topic(s) had no matches in current agendas."
+        if failed:
+            summary += f" {failed} failed (missing channel or no permissions)."
+        await interaction.followup.send(summary, ephemeral=True)
+
+
 async def setup(bot: commands.Bot):
     await bot.add_cog(AdminCog(bot))
