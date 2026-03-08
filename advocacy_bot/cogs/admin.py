@@ -76,7 +76,12 @@ class AdminCog(commands.Cog):
             await interaction.followup.send("No watches set up in this server.", ephemeral=True)
             return
 
-        results = find_matches(watches, recent, items_by_meeting)
+        settings = await self.bot.db.get_guild_settings(interaction.guild_id)
+        results = await find_matches(
+            watches, recent, items_by_meeting,
+            embedder=self.bot.embedder, db=self.bot.db,
+            threshold=settings.get("similarity_threshold", 0.45),
+        )
         if not results:
             await interaction.followup.send(
                 f"No matches found across {len(recent)} meeting(s) and {len(watches)} watch(es).",
