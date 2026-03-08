@@ -1,10 +1,7 @@
-import asyncio
 import discord
 from collections import defaultdict
 from discord import app_commands
 from discord.ext import commands
-from ..config import PORTAL_BASE_URL
-from ..scraper import scrape_item_docs
 
 
 class MeetingsCog(commands.Cog):
@@ -108,22 +105,6 @@ class MeetingsCog(commands.Cog):
             )
             return
 
-        # Fetch supporting docs concurrently for displayed items (5 at a time)
-        displayed = items[:25]
-        sem = asyncio.Semaphore(5)
-
-        async def _fetch_docs(item):
-            if not item.item_number or not item.item_number.isdigit():
-                return item.item_number, []
-            async with sem:
-                try:
-                    docs = await scrape_item_docs(PORTAL_BASE_URL, meeting.id, int(item.item_number))
-                except Exception:
-                    docs = []
-            return item.item_number, docs
-
-        doc_map = dict(await asyncio.gather(*[_fetch_docs(i) for i in displayed]))
-
         embed = discord.Embed(
             title=f"Agenda: {meeting.title}",
             color=discord.Color.blurple(),
@@ -168,7 +149,7 @@ class MeetingsCog(commands.Cog):
         truncated = False
         current_section = ""
         text_parts = []
-        for item in displayed:
+        for item in items:
             if item.section != current_section:
                 if text_parts:
                     if not _add_section(current_section or "Items", text_parts):
@@ -177,12 +158,6 @@ class MeetingsCog(commands.Cog):
                     text_parts = []
                 current_section = item.section
             label = f"**{item.item_number}**: {item.title[:80]}" if item.item_number else item.title[:80]
-            docs = doc_map.get(item.item_number, [])
-            if docs:
-                doc_links = " · ".join(f"[{name[:30]}]({url})" for name, url in docs[:3])
-                if len(docs) > 3:
-                    doc_links += f" +{len(docs) - 3} more"
-                label += f"\n  📎 {doc_links}"
             text_parts.append(label)
 
         if text_parts and not truncated:
