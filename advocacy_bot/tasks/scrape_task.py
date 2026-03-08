@@ -42,7 +42,10 @@ class ScrapeTask(commands.Cog):
         upcoming = [m for m in meetings if m.date and m.date >= now]
         watches = await self.bot.db.get_guild_watches(guild_id)
         if watches and upcoming:
-            upcoming_items = {m.id: items_by_meeting[m.id] for m in upcoming}
+            # Re-fetch items from DB so they have assigned IDs for embedding storage
+            upcoming_items = {}
+            for m in upcoming:
+                upcoming_items[m.id] = await self.bot.db.get_agenda_items(m.id, guild_id)
             settings = await self.bot.db.get_guild_settings(guild_id)
             results = await find_matches(
                 watches, upcoming, upcoming_items,
