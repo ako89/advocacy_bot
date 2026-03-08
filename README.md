@@ -1,4 +1,5 @@
 # advocacy_bot
+DEMO VIDEO: https://youtu.be/MrCrkAuEQ94
 
 A Discord bot that monitors San Diego City Council meeting agendas and notifies users when topics they care about appear. Helps advocates stay on top of public comment opportunities without manually checking the portal.
 
