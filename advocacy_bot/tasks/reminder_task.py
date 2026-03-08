@@ -47,10 +47,15 @@ class ReminderTask(commands.Cog):
             items = await self.bot.db.get_agenda_items(meeting.id, guild_id)
             items_by_meeting[meeting.id] = items
 
-        results = find_matches(watches, upcoming, items_by_meeting)
+        results = await find_matches(
+            watches, upcoming, items_by_meeting,
+            embedder=self.bot.embedder, db=self.bot.db,
+            threshold=settings.get("similarity_threshold", 0.45),
+        )
         # Override match type to "reminder"
         reminder_results = [
-            MatchResult(watch=r.watch, meeting=r.meeting, items=r.items, match_type="reminder")
+            MatchResult(watch=r.watch, meeting=r.meeting, items=r.items,
+                        match_type="reminder", scores=r.scores)
             for r in results
         ]
         await send_notifications(self.bot, self.bot.db, reminder_results)
