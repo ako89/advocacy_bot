@@ -117,6 +117,32 @@ async def scrape_meeting_list(base_url: str, delay: float = 2.0) -> list[Meeting
     return list(seen.values())
 
 
+async def scrape_item_docs(
+    base_url: str,
+    meeting_id: int,
+    item_id: int,
+) -> list[tuple[str, str]]:
+    """Fetch supporting document links for a single agenda item.
+
+    Returns a list of (display_name, absolute_url) pairs.
+    """
+    url = (
+        f"{base_url.rstrip('/')}/Meetings/ViewMeetingAgendaItem"
+        f"?meetingId={meeting_id}&itemId={item_id}&isSection=false&type=agenda"
+    )
+    async with _make_client() as client:
+        resp = await client.get(url)
+        resp.raise_for_status()
+    soup = BeautifulSoup(resp.text, "html.parser")
+    docs = []
+    for a in soup.select('a[id^="lnkAttachment_"]'):
+        name = a.get_text(strip=True)
+        href = a.get("href", "")
+        if href:
+            docs.append((name, urljoin(base_url, href)))
+    return docs
+
+
 async def scrape_agenda(
     base_url: str,
     meeting_id: int,
