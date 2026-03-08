@@ -53,6 +53,11 @@ class AdvocacyBot(commands.Bot):
         await self.tree.sync()
         log.info("Logged in as %s (ID: %s)", self.user, self.user.id)
 
+    async def on_guild_join(self, guild: discord.Guild):
+        self.tree.copy_global_to(guild=guild)
+        await self.tree.sync(guild=guild)
+        log.info("Synced commands to new guild %s", guild.id)
+
     async def close(self):
         await self.db.close()
         await super().close()

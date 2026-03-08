@@ -141,11 +141,14 @@ async def _semantic_pass(
     # --- watch embeddings (cache in DB) ---
     hits: dict[tuple[int, int], dict[int, float]] = {}
     for watch in watches:
-        blob = await db.get_watch_embedding(watch.id, model_name)
+        blob = None
+        if watch.id:
+            blob = await db.get_watch_embedding(watch.id, model_name)
         if blob is None:
             vecs = await embedder.embed([watch.keyword])
             blob = vecs[0].tobytes()
-            await db.save_watch_embedding(watch.id, blob, model_name)
+            if watch.id:
+                await db.save_watch_embedding(watch.id, blob, model_name)
 
         watch_vec = np.frombuffer(blob, dtype=np.float32)
         # dot product = cosine similarity (vectors are normalised)

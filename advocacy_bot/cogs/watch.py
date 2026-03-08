@@ -81,6 +81,66 @@ async def _send_channel_watches(
         await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
 
 
+class UnwatchButton(discord.ui.Button):
+    def __init__(self, keyword: str, user_id: int, guild_id: int, row: int = 0):
+        super().__init__(
+            label=keyword,
+            style=discord.ButtonStyle.danger,
+            emoji="\u2716",
+            custom_id=f"unwatch:{user_id}:{keyword}",
+            row=row,
+        )
+        self.keyword = keyword
+        self.owner_id = user_id
+        self.guild_id = guild_id
+
+    async def callback(self, interaction: discord.Interaction):
+        if interaction.user.id != self.owner_id:
+            await interaction.response.send_message("These aren't your watches.", ephemeral=True)
+            return
+        await self.view.bot.db.remove_watch(self.guild_id, self.owner_id, self.keyword)
+        await _send_unwatch_panel(interaction, self.view.bot, edit=True)
+
+
+class UnwatchView(discord.ui.View):
+    def __init__(self, bot: commands.Bot, user_id: int, guild_id: int, watches):
+        super().__init__(timeout=120)
+        self.bot = bot
+        for i, w in enumerate(watches[:20]):
+            self.add_item(UnwatchButton(w.keyword, user_id, guild_id, row=i // 5))
+
+
+async def _send_unwatch_panel(
+    interaction: discord.Interaction, bot: commands.Bot, edit: bool = False,
+):
+    watches = await bot.db.get_user_watches(interaction.guild_id, interaction.user.id)
+    if not watches:
+        embed = discord.Embed(
+            title="Your Watches",
+            description="You have no active watches. Use `/watch` to add one.",
+            color=discord.Color.greyple(),
+        )
+        if edit:
+            await interaction.response.edit_message(embed=embed, view=None)
+        else:
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+        return
+
+    lines = [f"`{w.keyword}`" for w in watches]
+    embed = discord.Embed(
+        title="Your Watches",
+        description="\n".join(lines),
+        color=discord.Color.blurple(),
+    )
+    embed.set_footer(text="Press a button to remove a topic.")
+    view = UnwatchView(bot, interaction.user.id, interaction.guild_id, watches)
+
+    if edit:
+        await interaction.response.edit_message(embed=embed, view=view)
+    else:
+        await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
+
+
 class WatchCog(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
@@ -117,8 +177,8 @@ class WatchCog(commands.Cog):
         else:
             await interaction.followup.send(f"You're already watching **{topic}**.")
 
-    @app_commands.command(name="unwatch", description="Remove a keyword subscription")
-    @app_commands.describe(keyword="The keyword to stop watching")
+    @app_commands.command(name="unwatch", description="Remove a topic subscription")
+    @app_commands.describe(keyword="The topic to stop watching")
     async def unwatch(self, interaction: discord.Interaction, keyword: str):
         removed = await self.bot.db.remove_watch(interaction.guild_id, interaction.user.id, keyword.strip())
         if removed:
@@ -130,19 +190,9 @@ class WatchCog(commands.Cog):
                 f"You weren't watching **{keyword.strip()}**.", ephemeral=True,
             )
 
-    @app_commands.command(name="mywatches", description="List your current keyword watches")
+    @app_commands.command(name="mywatches", description="List and manage your topic watches")
     async def mywatches(self, interaction: discord.Interaction):
-        watches = await self.bot.db.get_user_watches(interaction.guild_id, interaction.user.id)
-        if not watches:
-            await interaction.response.send_message("You have no active watches. Use `/watch` to add one.", ephemeral=True)
-            return
-        lines = [f"- `{w.keyword}`" for w in watches]
-        embed = discord.Embed(
-            title="Your Watches",
-            description="\n".join(lines),
-            color=discord.Color.blurple(),
-        )
-        await interaction.response.send_message(embed=embed, ephemeral=True)
+        await _send_unwatch_panel(interaction, self.bot)
 
     @app_commands.command(name="channelwatches", description="List and manage keyword watches routed to a channel")
     @app_commands.describe(channel="The channel to check (defaults to current channel)")

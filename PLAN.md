@@ -124,6 +124,12 @@ advocacy_bot/
 19. `Dockerfile` + `docker-compose.yml`
 20. Deploy to VPS, test end-to-end
 
+## Backlog
+
+- [ ] Hot reload for local dev (e.g. `watchfiles` or cog-only reload)
+- [ ] Logging verbosity toggle (e.g. `/loglevel` command or env var)
+- [ ] Investigate semantic matcher quality (e.g. "party" should match St. Patrick's Day parades — threshold tuning, model choice, false positives/negatives)
+
 ## Verification
 - **Unit tests**: Scraper against saved HTML fixtures, matcher edge cases, DB operations with in-memory SQLite
 - **Manual integration**: Run scraper against live site, verify parsed data

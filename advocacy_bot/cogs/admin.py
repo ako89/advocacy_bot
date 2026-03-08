@@ -135,7 +135,12 @@ class AdminCog(commands.Cog):
             # Create a fake watch for this keyword to use the matcher
             from ..models import Watch
             fake_watch = Watch(id=0, guild_id=guild_id, user_id=interaction.user.id, keyword=route.keyword)
-            results = find_matches([fake_watch], all_meetings, items_by_meeting)
+            settings = await self.bot.db.get_guild_settings(guild_id)
+            results = await find_matches(
+                [fake_watch], all_meetings, items_by_meeting,
+                embedder=self.bot.embedder, db=self.bot.db,
+                threshold=settings.get("similarity_threshold", 0.45),
+            )
 
             if not results:
                 no_matches += 1
