@@ -36,13 +36,16 @@ def build_embed(result: MatchResult) -> discord.Embed:
             value=discord.utils.format_dt(result.meeting.date, style="F"),
             inline=True,
         )
-    embed.add_field(name="Keyword", value=f"`{result.watch.keyword}`", inline=True)
+    embed.add_field(name="Topic", value=f"`{result.watch.keyword}`", inline=True)
 
-    items_text = "\n".join(
-        f"- **{item.item_number}**: {item.title[:100]}" if item.item_number
-        else f"- {item.title[:100]}"
-        for item in result.items[:10]
-    )
+    def _item_line(item):
+        label = f"**{item.item_number}**: {item.title[:100]}" if item.item_number else item.title[:100]
+        if result.scores and item.id in result.scores:
+            pct = int(result.scores[item.id] * 100)
+            label += f" ({pct}% match)"
+        return f"- {label}"
+
+    items_text = "\n".join(_item_line(item) for item in result.items[:10])
     if len(result.items) > 10:
         items_text += f"\n... and {len(result.items) - 10} more"
     embed.add_field(name="Matching Items", value=items_text or "N/A", inline=False)
@@ -87,6 +90,7 @@ async def send_notifications(
             meeting=result.meeting,
             items=unsent_items,
             match_type=result.match_type,
+            scores=result.scores,
         )
         embed = build_embed(filtered)
 

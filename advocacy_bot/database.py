@@ -61,7 +61,23 @@ CREATE TABLE IF NOT EXISTS guild_settings (
     reminder_hours REAL NOT NULL DEFAULT 24.0,
     scrape_interval_minutes INTEGER NOT NULL DEFAULT 30
 );
+
+CREATE TABLE IF NOT EXISTS watch_embeddings (
+    watch_id INTEGER PRIMARY KEY REFERENCES watches(id) ON DELETE CASCADE,
+    embedding BLOB NOT NULL,
+    model_name TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS item_embeddings (
+    item_id INTEGER PRIMARY KEY REFERENCES agenda_items(id) ON DELETE CASCADE,
+    embedding BLOB NOT NULL,
+    model_name TEXT NOT NULL
+);
 """
+
+_MIGRATIONS = [
+    "ALTER TABLE guild_settings ADD COLUMN similarity_threshold REAL NOT NULL DEFAULT 0.45",
+]
 
 
 class Database:
@@ -72,7 +88,13 @@ class Database:
     async def connect(self):
         self.db = await aiosqlite.connect(self.path)
         self.db.row_factory = aiosqlite.Row
+        await self.db.execute("PRAGMA foreign_keys = ON")
         await self.db.executescript(_SCHEMA)
+        for sql in _MIGRATIONS:
+            try:
+                await self.db.execute(sql)
+            except Exception:
+                pass  # column already exists
         await self.db.commit()
 
     async def close(self):
@@ -147,6 +169,13 @@ class Database:
 
     async def replace_agenda_items(self, meeting_id: int, guild_id: int, items: list[AgendaItem]):
         assert self.db
+        # Delete stale item embeddings before removing items
+        await self.db.execute(
+            """DELETE FROM item_embeddings WHERE item_id IN (
+                 SELECT id FROM agenda_items WHERE meeting_id = ? AND guild_id = ?
+               )""",
+            (meeting_id, guild_id),
+        )
         await self.db.execute(
             "DELETE FROM agenda_items WHERE meeting_id = ? AND guild_id = ?",
             (meeting_id, guild_id),
@@ -325,6 +354,48 @@ class Database:
         )
         await self.db.commit()
 
+    # --- Embeddings ---
+
+    async def save_watch_embedding(self, watch_id: int, blob: bytes, model_name: str):
+        assert self.db
+        await self.db.execute(
+            """INSERT INTO watch_embeddings (watch_id, embedding, model_name)
+               VALUES (?, ?, ?)
+               ON CONFLICT(watch_id) DO UPDATE SET embedding = ?, model_name = ?""",
+            (watch_id, blob, model_name, blob, model_name),
+        )
+        await self.db.commit()
+
+    async def get_watch_embedding(self, watch_id: int, model_name: str) -> bytes | None:
+        assert self.db
+        rows = await self.db.execute_fetchall(
+            "SELECT embedding FROM watch_embeddings WHERE watch_id = ? AND model_name = ?",
+            (watch_id, model_name),
+        )
+        return bytes(rows[0]["embedding"]) if rows else None
+
+    async def save_item_embeddings(self, batch: list[tuple[int, bytes, str]]):
+        assert self.db
+        for item_id, blob, model_name in batch:
+            await self.db.execute(
+                """INSERT INTO item_embeddings (item_id, embedding, model_name)
+                   VALUES (?, ?, ?)
+                   ON CONFLICT(item_id) DO UPDATE SET embedding = ?, model_name = ?""",
+                (item_id, blob, model_name, blob, model_name),
+            )
+        await self.db.commit()
+
+    async def get_item_embeddings(self, item_ids: list[int], model_name: str) -> dict[int, bytes]:
+        assert self.db
+        if not item_ids:
+            return {}
+        placeholders = ",".join("?" for _ in item_ids)
+        rows = await self.db.execute_fetchall(
+            f"SELECT item_id, embedding FROM item_embeddings WHERE item_id IN ({placeholders}) AND model_name = ?",
+            (*item_ids, model_name),
+        )
+        return {r["item_id"]: bytes(r["embedding"]) for r in rows}
+
     # --- Guild Settings ---
 
     async def get_guild_settings(self, guild_id: int) -> dict:
@@ -338,8 +409,9 @@ class Database:
                 "default_channel_id": r["default_channel_id"],
                 "reminder_hours": r["reminder_hours"],
                 "scrape_interval_minutes": r["scrape_interval_minutes"],
+                "similarity_threshold": r["similarity_threshold"],
             }
-        return {"default_channel_id": None, "reminder_hours": 24.0, "scrape_interval_minutes": 30}
+        return {"default_channel_id": None, "reminder_hours": 24.0, "scrape_interval_minutes": 30, "similarity_threshold": 0.45}
 
     async def update_guild_settings(self, guild_id: int, **kwargs):
         assert self.db
@@ -350,7 +422,7 @@ class Database:
             (guild_id,),
         )
         for key, value in kwargs.items():
-            if key in ("default_channel_id", "reminder_hours", "scrape_interval_minutes"):
+            if key in ("default_channel_id", "reminder_hours", "scrape_interval_minutes", "similarity_threshold"):
                 await self.db.execute(
                     f"UPDATE guild_settings SET {key} = ? WHERE guild_id = ?",
                     (value, guild_id),

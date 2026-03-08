@@ -1,8 +1,9 @@
 import logging
 import discord
 from discord.ext import commands
-from .config import DISCORD_TOKEN, DATABASE_PATH
+from .config import DISCORD_TOKEN, DATABASE_PATH, EMBEDDING_PROVIDER, EMBEDDING_MODEL, OPENAI_API_KEY
 from .database import Database
+from .embeddings import LocalEmbedder, ApiEmbedder
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
 log = logging.getLogger("advocacy_bot")
@@ -24,12 +25,22 @@ class AdvocacyBot(commands.Bot):
         intents.message_content = True
         super().__init__(command_prefix="!", intents=intents)
         self.db = Database(DATABASE_PATH)
+        if EMBEDDING_PROVIDER == "openai" and OPENAI_API_KEY:
+            self.embedder = ApiEmbedder(api_key=OPENAI_API_KEY, model=EMBEDDING_MODEL)
+        else:
+            self.embedder = LocalEmbedder(model_name=EMBEDDING_MODEL)
 
     async def setup_hook(self):
         await self.db.connect()
         for ext in EXTENSIONS:
             await self.load_extension(ext)
             log.info("Loaded extension %s", ext)
+        # Warm up the embedding model so the first match/watch isn't slow
+        try:
+            await self.embedder.embed(["warmup"])
+            log.info("Embedding model warmed up")
+        except Exception:
+            log.exception("Failed to warm up embedding model")
 
     async def on_ready(self):
         # Sync commands per-guild for instant availability

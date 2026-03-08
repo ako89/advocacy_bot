@@ -49,3 +49,4 @@ class MatchResult:
     meeting: Meeting
     items: list[AgendaItem]
     match_type: str  # "new_match", "agenda_update", "public_comment", "reminder"
+    scores: dict[int, float] | None = None  # item_id → similarity score

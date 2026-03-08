@@ -85,27 +85,37 @@ class WatchCog(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
-    @app_commands.command(name="watch", description="Subscribe to alerts for a keyword on city council agendas")
-    @app_commands.describe(keyword="The keyword or phrase to watch for")
-    async def watch(self, interaction: discord.Interaction, keyword: str):
-        keyword = keyword.strip()
-        if not keyword:
-            await interaction.response.send_message("Please provide a keyword.", ephemeral=True)
+    @app_commands.command(name="watch", description="Subscribe to alerts for a topic on city council agendas")
+    @app_commands.describe(topic="Keyword or topic to watch for")
+    async def watch(self, interaction: discord.Interaction, topic: str):
+        topic = topic.strip()
+        if not topic:
+            await interaction.response.send_message("Please provide a topic.", ephemeral=True)
             return
-        if len(keyword) > 100:
-            await interaction.response.send_message("Keyword must be under 100 characters.", ephemeral=True)
+        if len(topic) > 100:
+            await interaction.response.send_message("Topic must be under 100 characters.", ephemeral=True)
             return
 
-        added = await self.bot.db.add_watch(interaction.guild_id, interaction.user.id, keyword)
+        await interaction.response.defer(ephemeral=True)
+        added = await self.bot.db.add_watch(interaction.guild_id, interaction.user.id, topic)
         if added:
-            await interaction.response.send_message(
-                f"Now watching for **{keyword}**. You'll be notified when it appears on an agenda.",
-                ephemeral=True,
+            # Pre-compute and cache the watch embedding
+            watches = await self.bot.db.get_user_watches(interaction.guild_id, interaction.user.id)
+            new_watch = next((w for w in watches if w.keyword == topic.lower()), None)
+            if new_watch and hasattr(self.bot, "embedder"):
+                try:
+                    vecs = await self.bot.embedder.embed([topic.lower()])
+                    model_name = getattr(self.bot.embedder, "model_name", "unknown")
+                    await self.bot.db.save_watch_embedding(
+                        new_watch.id, vecs[0].tobytes(), model_name,
+                    )
+                except Exception:
+                    pass  # embedding will be computed on next match cycle
+            await interaction.followup.send(
+                f"Now watching for **{topic}**. You'll be notified when it appears on an agenda.",
             )
         else:
-            await interaction.response.send_message(
-                f"You're already watching **{keyword}**.", ephemeral=True,
-            )
+            await interaction.followup.send(f"You're already watching **{topic}**.")
 
     @app_commands.command(name="unwatch", description="Remove a keyword subscription")
     @app_commands.describe(keyword="The keyword to stop watching")

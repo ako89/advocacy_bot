@@ -42,8 +42,16 @@ class ScrapeTask(commands.Cog):
         upcoming = [m for m in meetings if m.date and m.date.replace(tzinfo=timezone.utc) >= now]
         watches = await self.bot.db.get_guild_watches(guild_id)
         if watches and upcoming:
-            upcoming_items = {m.id: items_by_meeting[m.id] for m in upcoming}
-            results = find_matches(watches, upcoming, upcoming_items)
+            # Re-fetch items from DB so they have assigned IDs for embedding storage
+            upcoming_items = {}
+            for m in upcoming:
+                upcoming_items[m.id] = await self.bot.db.get_agenda_items(m.id, guild_id)
+            settings = await self.bot.db.get_guild_settings(guild_id)
+            results = await find_matches(
+                watches, upcoming, upcoming_items,
+                embedder=self.bot.embedder, db=self.bot.db,
+                threshold=settings.get("similarity_threshold", 0.45),
+            )
             await send_notifications(self.bot, self.bot.db, results)
 
         return count
